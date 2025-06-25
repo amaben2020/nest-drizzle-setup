@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1750848459110,
+      "tag": "0000_wandering_wolfpack",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1750848501624,
+      "tag": "0001_cute_gladiator",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1750850769769,
+      "tag": "0002_first_the_liberteens",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1750850871972,
+      "tag": "0003_worried_devos",
+      "breakpoints": true
+    }
+  ]
+}

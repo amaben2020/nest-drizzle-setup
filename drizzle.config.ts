@@ -1,17 +1,15 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-console.log('process.env.DB_DEV_HOST', process.env.DB_DEV_HOST);
-
 export default {
-  schema: './src/db/schema.ts',
+  schema: './src/database/schema.ts',
   out: './drizzle/migrations',
-  driver: 'mysql2',
+  dialect: 'mysql', // ✅ valid dialect
   dbCredentials: {
-    host: 'localhost',
-    port: 3307,
-    user: 'root',
-    password: 'algomachine',
-    database: 'db_local',
+    host: process.env.DB_DEV_HOST || 'localhost',
+    port: Number(process.env.DB_DEV_PORT || '3307'),
+    user: process.env.DB_DEV_USER || 'root',
+    password: process.env.DB_DEV_PASS || 'algomachine',
+    database: process.env.DB_DEV_NAME || 'db_local',
   },
 };

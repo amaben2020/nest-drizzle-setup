@@ -1,10 +1,13 @@
 import {
   mysqlTable,
+  mysqlSchema,
+  AnyMySqlColumn,
   primaryKey,
   bigint,
   varchar,
   datetime,
   index,
+  foreignKey,
   unique,
   decimal,
   mysqlEnum,
@@ -2247,8 +2250,3 @@ export const withdrawIdempotencyRecords = mysqlTable(
     }),
   ],
 );
-
-export const usersTest = mysqlTable('usersTest', {
-  id: int('id').primaryKey().autoincrement(),
-  email: varchar('email', { length: 255 }),
-});

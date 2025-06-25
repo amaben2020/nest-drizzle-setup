@@ -4,7 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DrizzleMySqlModule } from '@knaadh/nestjs-drizzle-mysql2';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { schema } from './database/schema';
+
+import { database } from './database';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { schema } from './database/schema';
     DrizzleMySqlModule.registerAsync({
       tag: 'DB_DEV',
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      useFactory: (_: ConfigService) => ({
         mysql: {
           connection: 'client',
           config: {
@@ -30,7 +31,7 @@ import { schema } from './database/schema';
             database: 'db_local',
           },
         },
-        config: { schema: { ...schema }, mode: 'default' },
+        config: { ...database, mode: 'default' },
       }),
     }),
 
