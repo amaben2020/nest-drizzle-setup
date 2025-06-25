@@ -1,6 +1,6 @@
 // schema.ts
-import { urls } from './url.entity';
+import { usersTest } from './usersTest.entity';
 export const schema = {
-  urls,
+  usersTest,
 };
 export type Schema = typeof schema;
