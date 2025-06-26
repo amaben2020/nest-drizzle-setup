@@ -1,0 +1,33 @@
+name: Apply Drizzle Migrations to Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Migrations to Staging DB
+        env:
+          DB_HOST: ${{ secrets.STAGING_DB_HOST }}
+          DB_PORT: ${{ secrets.STAGING_DB_PORT }}
+          DB_USERNAME: ${{ secrets.STAGING_DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.STAGING_DB_DATABASE }}
+        run: |
+          echo "Running drizzle migration to staging DB..."
+          npx drizzle-kit migrate --config=drizzle.config.ts

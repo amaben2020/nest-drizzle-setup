@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
     "introspect": "npx drizzle-kit introspect && pnpm copy-schema",
-    "copy-schema": "mkdir -p src/database && cp drizzle/migrations/schema.ts src/database/schema.ts && cp drizzle/migrations/relations.ts src/database/relations.ts"
+    "copy-schema": "mkdir -p src/database && cp drizzle/migrations/schema.ts src/database/schema.ts && cp drizzle/migrations/relations.ts src/database/relations.ts",
+    "migrate:staging": "env $(cat .env.staging | xargs) npx drizzle-kit migrate --config=drizzle.config.ts"
   },
   "dependencies": {
     "@knaadh/nestjs-drizzle-mysql2": "^1.2.0",
