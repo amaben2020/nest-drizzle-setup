@@ -6,30 +6,35 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { database } from './database';
+import appConfig from './appConfig';
+import databaseConfig from './database/databaseConfig';
+import { environmentValidation } from 'environment.config';
+
+const ENV = process.env.NODE_ENV ?? 'development';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ENV ? `.env.${ENV}` : '.env',
+      load: [appConfig, databaseConfig],
+      validationSchema: ENV === 'test' ? undefined : environmentValidation,
+    }),
 
     // DEV DB
     DrizzleMySqlModule.registerAsync({
       tag: 'DB_DEV',
       inject: [ConfigService],
-      // configService: ConfigService
-      useFactory: () => ({
+
+      useFactory: (config: ConfigService) => ({
         mysql: {
           connection: 'client',
           config: {
-            // host: config.get('DB_DEV_HOST'),
-            host: 'localhost',
-            // port: Number(config.get('DB_DEV_PORT')),
-            port: 3307,
-            // user: config.get('DB_DEV_USER'),
-            user: 'root',
-            // password: config.get('DB_DEV_PASS'),
-            password: 'algomachine',
-            // database: config.get('DB_DEV_NAME'),
-            database: 'db_local',
+            host: config.get('DB_HOST'), //propertyPath must match the key in .env
+            port: Number(config.get('DB_PORT')),
+            user: config.get('DB_USERNAME'),
+            password: config.get('DB_PASSWORD'),
+            database: config.get('DB_DATABASE'),
           },
         },
         config: { ...database, mode: 'default' },
