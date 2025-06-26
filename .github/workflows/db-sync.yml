@@ -1,0 +1,50 @@
+name: Sync Drizzle Schema on Merge
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  sync-schema:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create env file for Drizzle
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            echo "Using production secrets"
+            echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env
+            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env
+            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env
+            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env
+          else
+            echo "Using staging secrets"
+            echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env
+            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env
+            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env
+            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env
+          fi
+
+      - name: Pull DB schema
+        run: npx drizzle-kit pull --config=drizzle.config.ts
+
+      - name: Generate schema diff
+        run: npx drizzle-kit generate --config=drizzle.config.ts
+
+      - name: Push schema changes
+        run: npx drizzle-kit push --config=drizzle.config.ts
