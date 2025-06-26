@@ -15,6 +15,13 @@
       "when": 1750953552684,
       "tag": "0001_fat_shinobi_shaw",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1750961424953,
+      "tag": "0002_wise_chat",
+      "breakpoints": true
     }
   ]
 }
