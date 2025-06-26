@@ -1,4 +1,3 @@
-import { usersTest } from './database/usersTest.entity';
 // app.service.ts
 import { Injectable, Inject } from '@nestjs/common';
 import { MySql2Database } from 'drizzle-orm/mysql2';
@@ -12,6 +11,7 @@ export class AppService {
   ) {}
 
   async getUsers() {
-    return this.devDb.select().from(usersTest);
+    // return this.devDb.select().from(usersTest);
+    return this.devDb.select().from(schema.users);
   }
 }
