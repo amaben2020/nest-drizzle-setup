@@ -1,3 +1,5 @@
+// OUR SOURCE OF TRUTH
+
 import {
   mysqlTable,
   mysqlSchema,
@@ -2099,4 +2101,5 @@ export const withdrawIdempotencyRecords = mysqlTable(
 export const usersTest = mysqlTable('usersTest', {
   id: int('id').primaryKey().autoincrement(),
   email: varchar('email', { length: 255 }),
+  name: varchar('name', { length: 255 }),
 });
