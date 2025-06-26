@@ -1,8 +1,11 @@
+-- Current sql file was generated after introspecting the database
+-- If you want to run this migration please uncomment this code before executing migrations
+/*
 CREATE TABLE `accessibilities` (
 	`id` bigint unsigned AUTO_INCREMENT NOT NULL,
 	`access_daemon` varchar(1000),
 	`ref_daemon` varchar(1000) NOT NULL,
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
 	CONSTRAINT `accessibilities_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -10,7 +13,7 @@ CREATE TABLE `adept_access` (
 	`id` bigint unsigned AUTO_INCREMENT NOT NULL,
 	`access_token` varchar(1000),
 	`ttl` datetime NOT NULL,
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
 	CONSTRAINT `adept_access_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -19,7 +22,7 @@ CREATE TABLE `airtime_providers` (
 	`name` varchar(20) NOT NULL,
 	`slug` varchar(20) NOT NULL,
 	`image` varchar(200) NOT NULL,
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
 	CONSTRAINT `airtime_providers_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -35,8 +38,8 @@ CREATE TABLE `airtime_transactions` (
 	`transaction_id` varchar(30) NOT NULL,
 	`status` enum('pending','successful','failed') NOT NULL DEFAULT 'pending',
 	`vend_request_body` varchar(1000),
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
-	`updated_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
+	`updated_at` datetime DEFAULT (now()),
 	`vend_response_body` varchar(1500),
 	`balance_before` decimal(15,2) NOT NULL DEFAULT '0.00',
 	`balance_after` decimal(15,2) NOT NULL DEFAULT '0.00',
@@ -55,7 +58,7 @@ CREATE TABLE `app_settings` (
 	`irchg_token_login` varchar(60),
 	`minimum_amount_to_phone` decimal(8,2) NOT NULL DEFAULT '200.00',
 	`withdrawal_charge_rate` decimal(8,0) NOT NULL DEFAULT '20',
-	`createdAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+	`createdAt` datetime NOT NULL DEFAULT (now()),
 	`no_kyc_max_amount` decimal(8,2) NOT NULL DEFAULT '20000.00',
 	`basic_transfer_amount` decimal(10,2) NOT NULL DEFAULT '20000.00',
 	`intermediate_transfer_amount` decimal NOT NULL DEFAULT '5000000',
@@ -80,7 +83,7 @@ CREATE TABLE `banks` (
 	`bank_code` varchar(20),
 	`name` varchar(150) NOT NULL,
 	`logo_url` varchar(100),
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
 	CONSTRAINT `banks_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -91,7 +94,7 @@ CREATE TABLE `beneficiaries` (
 	`identifier` varchar(50) NOT NULL,
 	`type` enum('phone','blue-user') NOT NULL,
 	`created_at` datetime NOT NULL,
-	`updated_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`updated_at` datetime DEFAULT (now()),
 	`business_beneficiary` bigint,
 	`name` varchar(255),
 	`business_id` bigint unsigned,
@@ -107,8 +110,8 @@ CREATE TABLE `bill_mates_favourites` (
 	`name` varchar(255) NOT NULL,
 	`slug` varchar(255),
 	`state` varchar(255),
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
-	`updated_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
+	`updated_at` datetime DEFAULT (now()),
 	`meter_category` varchar(100),
 	CONSTRAINT `bill_mates_favourites_id` PRIMARY KEY(`id`)
 );
@@ -130,7 +133,7 @@ CREATE TABLE `bill_mates_transactions` (
 CREATE TABLE `blue_admin_roles` (
 	`id` bigint unsigned AUTO_INCREMENT NOT NULL,
 	`name` varchar(50) NOT NULL,
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
 	CONSTRAINT `blue_admin_roles_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -143,29 +146,9 @@ CREATE TABLE `blue_admins` (
 	`display_picture` varchar(255),
 	`password_changed_at` varchar(30),
 	`role` varchar(20) NOT NULL,
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
-	`updated_at` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime DEFAULT (now()),
+	`updated_at` datetime NOT NULL DEFAULT (now()),
 	CONSTRAINT `blue_admins_id` PRIMARY KEY(`id`)
-);
---> statement-breakpoint
-CREATE TABLE `business_airtime_transactions` (
-	`id` bigint unsigned AUTO_INCREMENT NOT NULL,
-	`business_id` bigint unsigned,
-	`branch_id` bigint unsigned,
-	`staff_id` bigint unsigned,
-	`provider` varchar(15) NOT NULL,
-	`receiver` varchar(15) NOT NULL,
-	`amount` decimal(12,2),
-	`payment_reference` varchar(40),
-	`payment_mode` enum('wallet','card'),
-	`phone` varchar(15),
-	`transaction_id` varchar(30) NOT NULL,
-	`status` enum('pending','successful','failed') NOT NULL DEFAULT 'pending',
-	`vend_request_body` varchar(1000),
-	`created_at` datetime DEFAULT (CURRENT_TIMESTAMP),
-	`updated_at` datetime DEFAULT (CURRENT_TIMESTAMP),
-	`vend_response_body` varchar(1500),
-	CONSTRAINT `business_airtime_transactions_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `business_branches` (
@@ -246,7 +229,7 @@ CREATE TABLE `business_onboarding_forms` (
 	`contact_role` varchar(100) NOT NULL,
 	`contact_phone` varchar(20) NOT NULL,
 	`contact_email` varchar(255),
-	`accepts_digital_payments` tinyint NOT NULL DEFAULT 0,
+	`accepts_digital_payments` tinyint NOT NULL,
 	`payment_tools` text NOT NULL,
 	`monthly_transactions` varchar(100) NOT NULL,
 	`employee_count` varchar(50),
@@ -454,7 +437,7 @@ CREATE TABLE `business_users` (
 	`phone` varchar(50) NOT NULL,
 	`display_picture` varchar(1000),
 	`is_deleted` tinyint unsigned DEFAULT 0,
-	`flagged` tinyint NOT NULL DEFAULT 0,
+	`flagged` tinyint NOT NULL,
 	`verified` tinyint unsigned DEFAULT 0,
 	`level` int DEFAULT 1,
 	`notification_status` tinyint unsigned DEFAULT 0,
@@ -1081,7 +1064,7 @@ CREATE TABLE `users` (
 	`password` varchar(255),
 	`passwordChangedAt` varchar(255),
 	`is_deleted` tinyint unsigned DEFAULT 0,
-	`flagged` tinyint NOT NULL DEFAULT 0,
+	`flagged` tinyint NOT NULL,
 	`verified` tinyint unsigned DEFAULT 0,
 	`reset_credential_status` tinyint unsigned DEFAULT 0,
 	`notification_status` tinyint NOT NULL DEFAULT 1,
@@ -1142,7 +1125,7 @@ CREATE TABLE `wallet_snapshots` (
 	`created_at` datetime NOT NULL,
 	`updated_at` datetime DEFAULT (CURRENT_TIMESTAMP),
 	`transaction_reference` varchar(20),
-	`is_new` tinyint DEFAULT 1,
+	`is_new` tinyint NOT NULL,
 	CONSTRAINT `wallet_snapshots_id` PRIMARY KEY(`id`),
 	CONSTRAINT `unique_user_transaction_type` UNIQUE(`user_id`,`transaction_reference`,`type`),
 	CONSTRAINT `balance_before_non_negative` CHECK((`balance_before` >= 0))
@@ -1186,68 +1169,22 @@ CREATE TABLE `withdraw_idempotency_records` (
 	CONSTRAINT `withdraw_idempotency_records_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-ALTER TABLE `airtime_transactions` ADD CONSTRAINT `airtime_transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `bill_mates_favourites` ADD CONSTRAINT `bill_mates_favourites_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_airtime_transactions` ADD CONSTRAINT `business_airtime_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_airtime_transactions` ADD CONSTRAINT `business_airtime_transactions_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_airtime_transactions` ADD CONSTRAINT `business_airtime_transactions_staff_id_staff_profiles_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `business_branches` ADD CONSTRAINT `business_branches_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_data_transactions` ADD CONSTRAINT `business_data_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `business_data_transactions` ADD CONSTRAINT `business_data_transactions_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `business_data_transactions` ADD CONSTRAINT `business_data_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `business_data_transactions` ADD CONSTRAINT `business_data_transactions_staff_id_staff_profiles_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_payment_transactions` ADD CONSTRAINT `business_payment_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_payment_transactions` ADD CONSTRAINT `business_payment_transactions_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_payment_transactions` ADD CONSTRAINT `business_payment_transactions_staff_id_staff_profiles_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_pins` ADD CONSTRAINT `business_pins_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_power_transactions` ADD CONSTRAINT `business_power_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_power_transactions` ADD CONSTRAINT `business_power_transactions_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_power_transactions` ADD CONSTRAINT `business_power_transactions_staff_id_staff_profiles_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_profiles` ADD CONSTRAINT `business_profiles_b_user_id_business_users_id_fk` FOREIGN KEY (`b_user_id`) REFERENCES `business_users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_recovery_infos` ADD CONSTRAINT `business_recovery_infos_user_id_business_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `business_users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_settlement_accounts` ADD CONSTRAINT `business_settlement_accounts_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_shareholders` ADD CONSTRAINT `business_shareholders_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_tv_transactions` ADD CONSTRAINT `business_tv_transactions_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_tv_transactions` ADD CONSTRAINT `business_tv_transactions_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_tv_transactions` ADD CONSTRAINT `business_tv_transactions_staff_id_staff_profiles_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_wallet_accounts` ADD CONSTRAINT `business_wallet_accounts_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_wallet_accounts` ADD CONSTRAINT `business_wallet_accounts_wallet_id_business_wallets_id_fk` FOREIGN KEY (`wallet_id`) REFERENCES `business_wallets`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_wallet_snapshots` ADD CONSTRAINT `business_wallet_snapshots_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `business_wallets` ADD CONSTRAINT `business_wallets_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `dashme_transactions` ADD CONSTRAINT `dashme_transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `data_transactions` ADD CONSTRAINT `data_transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `deleted_accounts` ADD CONSTRAINT `deleted_accounts_reason_id_reasons_id_fk` FOREIGN KEY (`reason_id`) REFERENCES `reasons`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `kycs` ADD CONSTRAINT `kycs_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `kycs` ADD CONSTRAINT `kycs_document_type_id_document_types_id_fk` FOREIGN KEY (`document_type_id`) REFERENCES `document_types`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `notifications` ADD CONSTRAINT `notifications_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `otps` ADD CONSTRAINT `otps_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `pins` ADD CONSTRAINT `pins_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `power_transactions` ADD CONSTRAINT `power_transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `recovery_infos` ADD CONSTRAINT `recovery_infos_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `report_preferences` ADD CONSTRAINT `report_preferences_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `security_questions` ADD CONSTRAINT `security_questions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `staff_profiles` ADD CONSTRAINT `staff_profiles_branch_id_business_branches_id_fk` FOREIGN KEY (`branch_id`) REFERENCES `business_branches`(`id`) ON DELETE set null ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `staff_profiles` ADD CONSTRAINT `staff_profiles_business_id_business_profiles_id_fk` FOREIGN KEY (`business_id`) REFERENCES `business_profiles`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `transactions` ADD CONSTRAINT `transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `tv_transactions` ADD CONSTRAINT `tv_transactions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `user_accounts` ADD CONSTRAINT `user_accounts_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `user_card_details` ADD CONSTRAINT `user_card_details_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `user_tokens` ADD CONSTRAINT `user_tokens_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `wallet_accounts` ADD CONSTRAINT `wallet_accounts_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `wallet_accounts` ADD CONSTRAINT `wallet_accounts_wallet_id_wallets_id_fk` FOREIGN KEY (`wallet_id`) REFERENCES `wallets`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `wallets` ADD CONSTRAINT `wallets_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-CREATE INDEX `idx_receiver` ON `airtime_transactions` (`receiver`);--> statement-breakpoint
-CREATE INDEX `idx_user_id` ON `airtime_transactions` (`user_id`);--> statement-breakpoint
-CREATE INDEX `beneficiary_id` ON `beneficiaries` (`beneficiary_id`);--> statement-breakpoint
-CREATE INDEX `idx_business_id` ON `beneficiaries` (`business_id`);--> statement-breakpoint
-CREATE INDEX `user_id` ON `beneficiaries` (`user_id`);--> statement-breakpoint
-CREATE INDEX `user_id` ON `bill_mates_favourites` (`user_id`);--> statement-breakpoint
-CREATE INDEX `idx_created_at` ON `bill_mates_transactions` (`created_at`);--> statement-breakpoint
-CREATE INDEX `idx_status` ON `bill_mates_transactions` (`status`);--> statement-breakpoint
-CREATE INDEX `idx_transaction_reference` ON `bill_mates_transactions` (`transaction_reference`);--> statement-breakpoint
-CREATE INDEX `idx_type` ON `bill_mates_transactions` (`type`);--> statement-breakpoint
-CREATE INDEX `idx_user_id` ON `bill_mates_transactions` (`user_id`);--> statement-breakpoint
 CREATE INDEX `business_id` ON `business_branches` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_data_branch_id` ON `business_data_transactions` (`branch_id`);--> statement-breakpoint
+CREATE INDEX `fk_data_business_id` ON `business_data_transactions` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_data_staff_id` ON `business_data_transactions` (`staff_id`);--> statement-breakpoint
+CREATE INDEX `fk_payment_branch_id` ON `business_payment_transactions` (`branch_id`);--> statement-breakpoint
+CREATE INDEX `fk_payment_business_id` ON `business_payment_transactions` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_payment_staff_id` ON `business_payment_transactions` (`staff_id`);--> statement-breakpoint
 CREATE INDEX `business_id` ON `business_pins` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_power_branch_id` ON `business_power_transactions` (`branch_id`);--> statement-breakpoint
+CREATE INDEX `fk_power_business_id` ON `business_power_transactions` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_power_staff_id` ON `business_power_transactions` (`staff_id`);--> statement-breakpoint
+CREATE INDEX `fk_b_user_id` ON `business_profiles` (`b_user_id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `business_recovery_infos` (`user_id`);--> statement-breakpoint
 CREATE INDEX `business_id` ON `business_shareholders` (`business_id`);--> statement-breakpoint
 CREATE INDEX `fk_txnhistory_branch_id` ON `business_transaction_histories` (`branch_id`);--> statement-breakpoint
@@ -1257,8 +1194,12 @@ CREATE INDEX `idx_created_at` ON `business_transaction_histories` (`created_at`)
 CREATE INDEX `idx_payment_mode` ON `business_transaction_histories` (`payment_mode`);--> statement-breakpoint
 CREATE INDEX `idx_status` ON `business_transaction_histories` (`status`);--> statement-breakpoint
 CREATE INDEX `idx_transaction_reference` ON `business_transaction_histories` (`transaction_id`);--> statement-breakpoint
+CREATE INDEX `fk_tv_branch_id` ON `business_tv_transactions` (`branch_id`);--> statement-breakpoint
+CREATE INDEX `fk_tv_business_id` ON `business_tv_transactions` (`business_id`);--> statement-breakpoint
+CREATE INDEX `fk_tv_staff_id` ON `business_tv_transactions` (`staff_id`);--> statement-breakpoint
 CREATE INDEX `business_id` ON `business_wallet_accounts` (`business_id`);--> statement-breakpoint
 CREATE INDEX `wallet_id` ON `business_wallet_accounts` (`wallet_id`);--> statement-breakpoint
+CREATE INDEX `fk_walletsnapshot_history_business_id` ON `business_wallet_snapshots` (`business_id`);--> statement-breakpoint
 CREATE INDEX `business_id` ON `business_wallets` (`business_id`);--> statement-breakpoint
 CREATE INDEX `created_at` ON `dashme_idempotency_records` (`created_at`);--> statement-breakpoint
 CREATE INDEX `transaction_id` ON `dashme_idempotency_records` (`transaction_id`,`user_id`,`operation_type`);--> statement-breakpoint
@@ -1281,7 +1222,10 @@ CREATE INDEX `idx_meter_type` ON `power_transactions` (`meter_type`);--> stateme
 CREATE INDEX `idx_receiver` ON `power_transactions` (`receiver`);--> statement-breakpoint
 CREATE INDEX `idx_user_id` ON `power_transactions` (`user_id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `recovery_infos` (`user_id`);--> statement-breakpoint
+CREATE INDEX `FK_report_preferences_business_id` ON `report_preferences` (`business_id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `security_questions` (`user_id`);--> statement-breakpoint
+CREATE INDEX `staff_profiles_branch_fk` ON `staff_profiles` (`branch_id`);--> statement-breakpoint
+CREATE INDEX `staff_profiles_business_id_fk` ON `staff_profiles` (`business_id`);--> statement-breakpoint
 CREATE INDEX `idx_created_at` ON `transaction_histories` (`created_at`);--> statement-breakpoint
 CREATE INDEX `idx_payment_mode` ON `transaction_histories` (`payment_mode`);--> statement-breakpoint
 CREATE INDEX `idx_transaction_reference` ON `transaction_histories` (`transaction_reference`);--> statement-breakpoint
@@ -1306,3 +1250,4 @@ CREATE INDEX `ws_idx_user_id` ON `wallet_snapshots` (`user_id`);--> statement-br
 CREATE INDEX `user_id` ON `wallets` (`user_id`);--> statement-breakpoint
 CREATE INDEX `created_at` ON `withdraw_idempotency_records` (`created_at`);--> statement-breakpoint
 CREATE INDEX `transaction_id` ON `withdraw_idempotency_records` (`transaction_id`,`user_id`,`operation_type`);
+*/

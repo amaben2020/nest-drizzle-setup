@@ -29,7 +29,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -75,7 +75,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -128,7 +128,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -231,7 +231,7 @@
           "notNull": false
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -239,7 +239,7 @@
           "notNull": false
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "datetime",
@@ -278,37 +278,8 @@
           ]
         }
       },
-      "indexes": {
-        "idx_receiver": {
-          "name": "idx_receiver",
-          "columns": [
-            "receiver"
-          ],
-          "isUnique": false
-        },
-        "idx_user_id": {
-          "name": "idx_user_id",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "airtime_transactions_ibfk_1": {
-          "name": "airtime_transactions_ibfk_1",
-          "tableFrom": "airtime_transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "indexes": {},
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unq_airtime_txn": {
           "name": "unq_airtime_txn",
@@ -398,7 +369,7 @@
           "notNull": true
         },
         "createdAt": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "createdAt",
           "type": "datetime",
@@ -570,7 +541,7 @@
           "notNull": false
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -637,7 +608,7 @@
           "notNull": true
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "datetime",
@@ -674,29 +645,7 @@
           ]
         }
       },
-      "indexes": {
-        "beneficiary_id": {
-          "name": "beneficiary_id",
-          "columns": [
-            "beneficiary_id"
-          ],
-          "isUnique": false
-        },
-        "idx_business_id": {
-          "name": "idx_business_id",
-          "columns": [
-            "business_id"
-          ],
-          "isUnique": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
@@ -761,7 +710,7 @@
           "notNull": false
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -769,7 +718,7 @@
           "notNull": false
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "datetime",
@@ -792,30 +741,8 @@
           ]
         }
       },
-      "indexes": {
-        "user_id": {
-          "name": "user_id",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "bill_mates_favourites_ibfk_1": {
-          "name": "bill_mates_favourites_ibfk_1",
-          "tableFrom": "bill_mates_favourites",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "indexes": {},
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -901,43 +828,7 @@
           ]
         }
       },
-      "indexes": {
-        "idx_created_at": {
-          "name": "idx_created_at",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "idx_status": {
-          "name": "idx_status",
-          "columns": [
-            "status"
-          ],
-          "isUnique": false
-        },
-        "idx_transaction_reference": {
-          "name": "idx_transaction_reference",
-          "columns": [
-            "transaction_reference"
-          ],
-          "isUnique": false
-        },
-        "idx_type": {
-          "name": "idx_type",
-          "columns": [
-            "type"
-          ],
-          "isUnique": false
-        },
-        "idx_user_id": {
-          "name": "idx_user_id",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
@@ -960,7 +851,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -1041,7 +932,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "datetime",
@@ -1049,7 +940,7 @@
           "notNull": false
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "datetime",
@@ -1067,178 +958,6 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraint": {}
-    },
-    "business_airtime_transactions": {
-      "name": "business_airtime_transactions",
-      "columns": {
-        "id": {
-          "autoincrement": true,
-          "name": "id",
-          "type": "bigint unsigned",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "business_id": {
-          "autoincrement": false,
-          "name": "business_id",
-          "type": "bigint unsigned",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "branch_id": {
-          "autoincrement": false,
-          "name": "branch_id",
-          "type": "bigint unsigned",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "staff_id": {
-          "autoincrement": false,
-          "name": "staff_id",
-          "type": "bigint unsigned",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "provider": {
-          "autoincrement": false,
-          "name": "provider",
-          "type": "varchar(15)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "receiver": {
-          "autoincrement": false,
-          "name": "receiver",
-          "type": "varchar(15)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "amount": {
-          "autoincrement": false,
-          "name": "amount",
-          "type": "decimal(12,2)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "payment_reference": {
-          "autoincrement": false,
-          "name": "payment_reference",
-          "type": "varchar(40)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "payment_mode": {
-          "autoincrement": false,
-          "name": "payment_mode",
-          "type": "enum('wallet','card')",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone": {
-          "autoincrement": false,
-          "name": "phone",
-          "type": "varchar(15)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "transaction_id": {
-          "autoincrement": false,
-          "name": "transaction_id",
-          "type": "varchar(30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "default": "'pending'",
-          "autoincrement": false,
-          "name": "status",
-          "type": "enum('pending','successful','failed')",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "vend_request_body": {
-          "autoincrement": false,
-          "name": "vend_request_body",
-          "type": "varchar(1000)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
-          "autoincrement": false,
-          "name": "created_at",
-          "type": "datetime",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
-          "autoincrement": false,
-          "name": "updated_at",
-          "type": "datetime",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "vend_response_body": {
-          "autoincrement": false,
-          "name": "vend_response_body",
-          "type": "varchar(1500)",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "compositePrimaryKeys": {
-        "business_airtime_transactions_id": {
-          "name": "business_airtime_transactions_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "fk_airtime_branch_id": {
-          "name": "fk_airtime_branch_id",
-          "tableFrom": "business_airtime_transactions",
-          "tableTo": "business_branches",
-          "columnsFrom": [
-            "branch_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "fk_airtime_business_id": {
-          "name": "fk_airtime_business_id",
-          "tableFrom": "business_airtime_transactions",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "fk_airtime_staff_id": {
-          "name": "fk_airtime_staff_id",
-          "tableFrom": "business_airtime_transactions",
-          "tableTo": "staff_profiles",
-          "columnsFrom": [
-            "staff_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -1299,7 +1018,7 @@
           "default": 1,
           "autoincrement": false,
           "name": "is_active",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         }
@@ -1322,8 +1041,8 @@
         }
       },
       "foreignKeys": {
-        "business_branches_ibfk_1": {
-          "name": "business_branches_ibfk_1",
+        "business_branches_business_id_business_profiles_id_fk": {
+          "name": "business_branches_business_id_business_profiles_id_fk",
           "tableFrom": "business_branches",
           "tableTo": "business_profiles",
           "columnsFrom": [
@@ -1546,10 +1265,32 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_data_branch_id": {
           "name": "fk_data_branch_id",
+          "columns": [
+            "branch_id"
+          ],
+          "isUnique": false
+        },
+        "fk_data_business_id": {
+          "name": "fk_data_business_id",
+          "columns": [
+            "business_id"
+          ],
+          "isUnique": false
+        },
+        "fk_data_staff_id": {
+          "name": "fk_data_staff_id",
+          "columns": [
+            "staff_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "business_data_transactions_branch_id_business_branches_id_fk": {
+          "name": "business_data_transactions_branch_id_business_branches_id_fk",
           "tableFrom": "business_data_transactions",
           "tableTo": "business_branches",
           "columnsFrom": [
@@ -1561,8 +1302,8 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "fk_data_business_id": {
-          "name": "fk_data_business_id",
+        "business_data_transactions_business_id_business_profiles_id_fk": {
+          "name": "business_data_transactions_business_id_business_profiles_id_fk",
           "tableFrom": "business_data_transactions",
           "tableTo": "business_profiles",
           "columnsFrom": [
@@ -1574,8 +1315,8 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "fk_data_staff_id": {
-          "name": "fk_data_staff_id",
+        "business_data_transactions_staff_id_staff_profiles_id_fk": {
+          "name": "business_data_transactions_staff_id_staff_profiles_id_fk",
           "tableFrom": "business_data_transactions",
           "tableTo": "staff_profiles",
           "columnsFrom": [
@@ -1798,10 +1539,9 @@
           "notNull": false
         },
         "accepts_digital_payments": {
-          "default": 0,
           "autoincrement": false,
           "name": "accepts_digital_payments",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         },
@@ -1834,7 +1574,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "timestamp",
@@ -1842,7 +1582,7 @@
           "notNull": true
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "timestamp",
@@ -2061,48 +1801,30 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_payment_branch_id": {
           "name": "fk_payment_branch_id",
-          "tableFrom": "business_payment_transactions",
-          "tableTo": "business_branches",
-          "columnsFrom": [
+          "columns": [
             "branch_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_payment_business_id": {
           "name": "fk_payment_business_id",
-          "tableFrom": "business_payment_transactions",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_payment_staff_id": {
           "name": "fk_payment_staff_id",
-          "tableFrom": "business_payment_transactions",
-          "tableTo": "staff_profiles",
-          "columnsFrom": [
+          "columns": [
             "staff_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unique_bus_transaction": {
           "name": "unique_bus_transaction",
@@ -2180,21 +1902,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "business_pins_ibfk_1": {
-          "name": "business_pins_ibfk_1",
-          "tableFrom": "business_pins",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -2410,48 +2118,30 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_power_branch_id": {
           "name": "fk_power_branch_id",
-          "tableFrom": "business_power_transactions",
-          "tableTo": "business_branches",
-          "columnsFrom": [
+          "columns": [
             "branch_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_power_business_id": {
           "name": "fk_power_business_id",
-          "tableFrom": "business_power_transactions",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_power_staff_id": {
           "name": "fk_power_staff_id",
-          "tableFrom": "business_power_transactions",
-          "tableTo": "staff_profiles",
-          "columnsFrom": [
+          "columns": [
             "staff_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -2603,22 +2293,16 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_b_user_id": {
           "name": "fk_b_user_id",
-          "tableFrom": "business_profiles",
-          "tableTo": "business_users",
-          "columnsFrom": [
+          "columns": [
             "b_user_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "UQ_29525485b1db8e87caf6a5ef042": {
           "name": "UQ_29525485b1db8e87caf6a5ef042",
@@ -2700,21 +2384,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "business_recovery_infos_ibfk_1": {
-          "name": "business_recovery_infos_ibfk_1",
-          "tableFrom": "business_recovery_infos",
-          "tableTo": "business_users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -2855,21 +2525,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "fk_business_id": {
-          "name": "fk_business_id",
-          "tableFrom": "business_settlement_accounts",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unique_business_id": {
           "name": "unique_business_id",
@@ -2980,21 +2636,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "business_shareholders_ibfk_1": {
-          "name": "business_shareholders_ibfk_1",
-          "tableFrom": "business_shareholders",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -3352,48 +2994,30 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_tv_branch_id": {
           "name": "fk_tv_branch_id",
-          "tableFrom": "business_tv_transactions",
-          "tableTo": "business_branches",
-          "columnsFrom": [
+          "columns": [
             "branch_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_tv_business_id": {
           "name": "fk_tv_business_id",
-          "tableFrom": "business_tv_transactions",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "fk_tv_staff_id": {
           "name": "fk_tv_staff_id",
-          "tableFrom": "business_tv_transactions",
-          "tableTo": "staff_profiles",
-          "columnsFrom": [
+          "columns": [
             "staff_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -3430,10 +3054,9 @@
           "notNull": false
         },
         "flagged": {
-          "default": 0,
           "autoincrement": false,
           "name": "flagged",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         },
@@ -3687,34 +3310,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "business_wallet_accounts_ibfk_1": {
-          "name": "business_wallet_accounts_ibfk_1",
-          "tableFrom": "business_wallet_accounts",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "business_wallet_accounts_ibfk_2": {
-          "name": "business_wallet_accounts_ibfk_2",
-          "tableFrom": "business_wallet_accounts",
-          "tableTo": "business_wallets",
-          "columnsFrom": [
-            "wallet_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -3802,22 +3398,16 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "fk_walletsnapshot_history_business_id": {
           "name": "fk_walletsnapshot_history_business_id",
-          "tableFrom": "business_wallet_snapshots",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unique_bus_snapshot": {
           "name": "unique_bus_snapshot",
@@ -3902,21 +3492,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "business_wallets_ibfk_1": {
-          "name": "business_wallets_ibfk_1",
-          "tableFrom": "business_wallets",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
-            "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "IDX_ff06839ff828223b3e3d33c2": {
           "name": "IDX_ff06839ff828223b3e3d33c2",
@@ -4181,21 +3757,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "dashme_transactions_ibfk_1": {
-          "name": "dashme_transactions_ibfk_1",
-          "tableFrom": "dashme_transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_transaction_id": {
           "name": "idx_transaction_id",
@@ -4597,21 +4159,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "data_transactions_ibfk_1": {
-          "name": "data_transactions_ibfk_1",
-          "tableFrom": "data_transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unq_airtime_txn": {
           "name": "unq_airtime_txn",
@@ -4666,21 +4214,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "deleted_accounts_ibfk_1": {
-          "name": "deleted_accounts_ibfk_1",
-          "tableFrom": "deleted_accounts",
-          "tableTo": "reasons",
-          "columnsFrom": [
-            "reason_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -5147,34 +4681,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "kycs_ibfk_1": {
-          "name": "kycs_ibfk_1",
-          "tableFrom": "kycs",
-          "tableTo": "document_types",
-          "columnsFrom": [
-            "document_type_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "kycs_ibfk_2": {
-          "name": "kycs_ibfk_2",
-          "tableFrom": "kycs",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -5281,21 +4788,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "notifications_ibfk_1": {
-          "name": "notifications_ibfk_1",
-          "tableFrom": "notifications",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -5370,21 +4863,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "otps_ibfk_1": {
-          "name": "otps_ibfk_1",
-          "tableFrom": "otps",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -5856,21 +5335,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "pins_ibfk_1": {
-          "name": "pins_ibfk_1",
-          "tableFrom": "pins",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -6171,21 +5636,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "power_transactions_ibfk_1": {
-          "name": "power_transactions_ibfk_1",
-          "tableFrom": "power_transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unq_airtime_txn": {
           "name": "unq_airtime_txn",
@@ -6292,21 +5743,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "recovery_infos_ibfk_1": {
-          "name": "recovery_infos_ibfk_1",
-          "tableFrom": "recovery_infos",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -6345,7 +5782,7 @@
           "default": 1,
           "autoincrement": false,
           "name": "is_active",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         },
@@ -6358,7 +5795,7 @@
           "notNull": true
         },
         "created_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "created_at",
           "type": "timestamp",
@@ -6366,7 +5803,7 @@
           "notNull": true
         },
         "updated_at": {
-          "default": "(CURRENT_TIMESTAMP)",
+          "default": "(now())",
           "autoincrement": false,
           "name": "updated_at",
           "type": "timestamp",
@@ -6383,22 +5820,16 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "FK_report_preferences_business_id": {
           "name": "FK_report_preferences_business_id",
-          "tableFrom": "report_preferences",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "UQ_8bd9422c2c9e0ca8ab0df102c5e": {
           "name": "UQ_8bd9422c2c9e0ca8ab0df102c5e",
@@ -6473,21 +5904,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "security_questions_ibfk_1": {
-          "name": "security_questions_ibfk_1",
-          "tableFrom": "security_questions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -6593,7 +6010,7 @@
           "default": 1,
           "autoincrement": false,
           "name": "is_active",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         },
@@ -6664,35 +6081,23 @@
           ]
         }
       },
-      "indexes": {},
-      "foreignKeys": {
+      "indexes": {
         "staff_profiles_branch_fk": {
           "name": "staff_profiles_branch_fk",
-          "tableFrom": "staff_profiles",
-          "tableTo": "business_branches",
-          "columnsFrom": [
+          "columns": [
             "branch_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "isUnique": false
         },
         "staff_profiles_business_id_fk": {
           "name": "staff_profiles_business_id_fk",
-          "tableFrom": "staff_profiles",
-          "tableTo": "business_profiles",
-          "columnsFrom": [
+          "columns": [
             "business_id"
           ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "isUnique": false
         }
       },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "UQ_6d4c6c0b447e39147b4a6dcbede": {
           "name": "UQ_6d4c6c0b447e39147b4a6dcbede",
@@ -7266,21 +6671,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "transactions_ibfk_1": {
-          "name": "transactions_ibfk_1",
-          "tableFrom": "transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_transaction_id": {
           "name": "idx_transaction_id",
@@ -7600,21 +6991,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "tv_transactions_ibfk_1": {
-          "name": "tv_transactions_ibfk_1",
-          "tableFrom": "tv_transactions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "unq_airtime_txn": {
           "name": "unq_airtime_txn",
@@ -7704,21 +7081,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "user_accounts_ibfk_1": {
-          "name": "user_accounts_ibfk_1",
-          "tableFrom": "user_accounts",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -7850,21 +7213,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "user_card_details_ibfk_1": {
-          "name": "user_card_details_ibfk_1",
-          "tableFrom": "user_card_details",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
@@ -7918,21 +7267,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "user_tokens_ibfk_1": {
-          "name": "user_tokens_ibfk_1",
-          "tableFrom": "user_tokens",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -8035,10 +7370,9 @@
           "notNull": false
         },
         "flagged": {
-          "default": 0,
           "autoincrement": false,
           "name": "flagged",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
           "notNull": true
         },
@@ -8379,34 +7713,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "wallet_accounts_ibfk_1": {
-          "name": "wallet_accounts_ibfk_1",
-          "tableFrom": "wallet_accounts",
-          "tableTo": "wallets",
-          "columnsFrom": [
-            "wallet_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "wallet_accounts_ibfk_2": {
-          "name": "wallet_accounts_ibfk_2",
-          "tableFrom": "wallet_accounts",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -8492,12 +7799,11 @@
           "notNull": false
         },
         "is_new": {
-          "default": 1,
           "autoincrement": false,
           "name": "is_new",
-          "type": "tinyint(1)",
+          "type": "tinyint",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "compositePrimaryKeys": {
@@ -8635,21 +7941,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "wallets_ibfk_1": {
-          "name": "wallets_ibfk_1",
-          "tableFrom": "wallets",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "uniqueConstraints": {
         "idx_user_id": {
           "name": "idx_user_id",
@@ -8913,16 +8205,6 @@
         }
       },
       "blue_admins": {
-        "columns": {
-          "created_at": {
-            "isDefaultAnExpression": true
-          },
-          "updated_at": {
-            "isDefaultAnExpression": true
-          }
-        }
-      },
-      "business_airtime_transactions": {
         "columns": {
           "created_at": {
             "isDefaultAnExpression": true

@@ -20,7 +20,12 @@
     "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
     "introspect": "npx drizzle-kit introspect && pnpm copy-schema",
     "copy-schema": "mkdir -p src/database && cp drizzle/migrations/schema.ts src/database/schema.ts && cp drizzle/migrations/relations.ts src/database/relations.ts",
-    "migrate:staging": "env $(cat .env.staging | xargs) npx drizzle-kit migrate --config=drizzle.config.ts"
+    "migrate:staging": "dotenv -e .env.staging -- npx drizzle-kit migrate --config=drizzle.config.ts",
+    "db:push": "npx drizzle-kit push",
+    "db:generate": "npx drizzle-kit generate && drizzle-kit generate --dialect=mysql --schema=src/database/schema.ts --out=./drizzle",
+    "db:studio": "npx drizzle-kit studio",
+    "db:push:staging": "dotenv -e .env.staging -- drizzle-kit push",
+    "db:push:dev": "dotenv -e .env -- drizzle-kit push"
   },
   "dependencies": {
     "@knaadh/nestjs-drizzle-mysql2": "^1.2.0",
@@ -48,6 +53,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.33",
     "@types/supertest": "^6.0.2",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.2",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
