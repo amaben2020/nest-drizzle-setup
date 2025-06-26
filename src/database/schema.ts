@@ -1,13 +1,10 @@
 import {
   mysqlTable,
-  mysqlSchema,
-  AnyMySqlColumn,
   primaryKey,
   bigint,
   varchar,
   datetime,
   index,
-  foreignKey,
   unique,
   decimal,
   mysqlEnum,

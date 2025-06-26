@@ -15,7 +15,8 @@ import { database } from './database';
     DrizzleMySqlModule.registerAsync({
       tag: 'DB_DEV',
       inject: [ConfigService],
-      useFactory: (_: ConfigService) => ({
+      // configService: ConfigService
+      useFactory: () => ({
         mysql: {
           connection: 'client',
           config: {
