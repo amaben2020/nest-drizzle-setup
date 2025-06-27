@@ -1,0 +1,1 @@
+ALTER TABLE `business_onboarding_forms` ADD PRIMARY KEY(`id`);
