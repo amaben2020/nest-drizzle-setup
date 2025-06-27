@@ -53,147 +53,71 @@
 #             exit 1
 #           fi
 
-# name: Safe Drizzle Schema Sync
-
-# on:
-#   push:
-#     branches:
-#       - staging
-#       - main
-
-# jobs:
-#   sync-schema:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: ⬇️ Checkout
-#         uses: actions/checkout@v3
-
-#       - name: 🔧 Set up Node
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 20
-
-#       - name: 📦 Install dependencies
-#         run: npm ci
-
-#       - name: 🔐 Write DB credentials to .env
-#         run: |
-#           echo "Setting up environment..."
-#           if [ "${{ github.ref_name }}" = "main" ]; then
-#             echo "PRODUCTION DB detected"
-#             echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env
-#             echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env
-#             echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env
-#             echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env
-#             echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env
-#           else
-#             echo "STAGING DB detected"
-#             echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env
-#             echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env
-#             echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env
-#             echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env
-#             echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env
-#           fi
-
-#       - name: 🔍 Introspect current DB schema
-#         run: |
-#           echo "📥 Pulling current DB schema into schema.ts..."
-#           npx drizzle-kit introspect --config=drizzle.config.ts || exit 1
-
-#       - name: 🧠 Generate migration diff
-#         run: |
-#           echo "📐 Generating schema diff from code/schema.ts..."
-#           npx drizzle-kit generate --config=drizzle.config.ts || exit 1
-
-#       - name: 🚨 Check for destructive changes (optional, basic)
-#         run: |
-#           echo "🔎 Checking for DROP statements in generated SQL..."
-#           if grep -i 'drop table' ./drizzle/migrations/*.sql; then
-#             echo "❌ Destructive migration detected. Aborting."
-#             exit 1
-#           fi
-
-#       - name: 🚀 Push migration to DB
-#         run: |
-#           echo "Pushing schema..."
-#           if ! npx drizzle-kit push --config=drizzle.config.ts; then
-#             echo "❌ Migration failed. Check for duplicate indexes or bad schema."
-#             exit 1
-#           fi
-
-name: Safe Schema Migration
+name: Safe Drizzle Schema Sync
 
 on:
   push:
     branches:
       - staging
-  pull_request:
-    branches:
       - main
 
 jobs:
-  migrate:
+  sync-schema:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v3
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: 🔧 Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Configure environment
-        id: env
+      - name: 🔐 Write DB credentials to .env
         run: |
-          if [ "${{ github.ref_name }}" == "main" ]; then
+          echo "Setting up environment..."
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "PRODUCTION DB detected"
             echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env
-            echo "TARGET_ENV=production" >> $GITHUB_OUTPUT
+            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env
+            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env
+            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env
           else
+            echo "STAGING DB detected"
             echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env
-            echo "TARGET_ENV=staging" >> $GITHUB_OUTPUT
+            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env
+            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env
+            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env
           fi
-          echo "DB_PORT=3306" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
 
-      - name: Dry-run migrations
-        id: dry-run
+      - name: 🔍 Introspect current DB schema
         run: |
-          npx drizzle-kit push --dry-run --config=drizzle.config.ts 2>dry-run.log || true
-          echo "DRY_RUN_OUTPUT=$(cat dry-run.log)" >> $GITHUB_OUTPUT
+          echo "📥 Pulling current DB schema into schema.ts..."
+          npx drizzle-kit introspect --config=drizzle.config.ts || exit 1
 
-      - name: Check for errors
-        if: steps.dry-run.outputs.DRY_RUN_OUTPUT != ''
+      - name: 🧠 Generate migration diff
         run: |
-          echo "::error::Dry-run detected issues:"
-          echo "${{ steps.dry-run.outputs.DRY_RUN_OUTPUT }}"
-          exit 1
+          echo "📐 Generating schema diff from code/schema.ts..."
+          npx drizzle-kit generate --config=drizzle.config.ts || exit 1
 
-      - name: Backup database
-        if: success()
+      - name: 🚨 Check for destructive changes (optional, basic)
         run: |
-          mysqldump -h $DB_HOST -u $DB_USERNAME -p$DB_PASSWORD $DB_DATABASE > backup.sql
-          gzip backup.sql
-          aws s3 cp backup.sql.gz s3://your-backup-bucket/${{ steps.env.outputs.TARGET_ENV }}-$(date +%s).sql.gz
+          echo "🔎 Checking for DROP statements in generated SQL..."
+          if grep -i 'drop table' ./drizzle/migrations/*.sql; then
+            echo "❌ Destructive migration detected. Aborting."
+            exit 1
+          fi
 
-      - name: Apply migrations (Staging)
-        if: steps.env.outputs.TARGET_ENV == 'staging' && success()
-        run: npx drizzle-kit push --config=drizzle.config.ts
-
-      - name: Require production approval
-        if: steps.env.outputs.TARGET_ENV == 'production' && success()
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.token }}
-          approvers: 'db-admins'
-
-      - name: Apply migrations (Production)
-        if: steps.env.outputs.TARGET_ENV == 'production' && success()
-        run: npx drizzle-kit push --config=drizzle.config.ts
+      - name: 🚀 Push migration to DB
+        run: |
+          echo "Pushing schema..."
+          if ! npx drizzle-kit push --config=drizzle.config.ts; then
+            echo "❌ Migration failed. Check for duplicate indexes or bad schema."
+            exit 1
+          fi
