@@ -2115,4 +2115,5 @@ export const usersTest = mysqlTable('usersTest', {
   email: varchar('email', { length: 255 }),
   name: varchar('name', { length: 255 }),
   nickname: varchar('nickname', { length: 255 }),
+  bestPal: varchar('best_pal', { length: 255 }),
 });

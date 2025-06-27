@@ -29,6 +29,13 @@
       "when": 1750979249030,
       "tag": "0003_tough_triathlon",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1751012958750,
+      "tag": "0004_fluffy_vampiro",
+      "breakpoints": true
     }
   ]
 }
