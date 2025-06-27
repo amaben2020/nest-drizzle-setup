@@ -432,42 +432,35 @@ export const businessFees = mysqlTable(
   (table) => [primaryKey({ columns: [table.id], name: 'business_fees_id' })],
 );
 
-export const businessOnboardingForms = mysqlTable(
-  'business_onboarding_forms',
-  {
-    id: serial().notNull(),
-    businessName: varchar('business_name', { length: 255 }).notNull(),
-    businessType: varchar('business_type', { length: 255 }).notNull(),
-    businessCategory: varchar('business_category', { length: 255 }).notNull(),
-    businessAddress: text('business_address').notNull(),
-    state: varchar({ length: 100 }).notNull(),
-    branchCount: varchar('branch_count', { length: 50 }).notNull(),
-    businessWebsite: varchar('business_website', { length: 255 }),
-    contactName: varchar('contact_name', { length: 255 }).notNull(),
-    contactRole: varchar('contact_role', { length: 100 }).notNull(),
-    contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
-    contactEmail: varchar('contact_email', { length: 255 }),
-    acceptsDigitalPayments: tinyint('accepts_digital_payments')
-      .default(0)
-      .notNull(),
-    paymentTools: text('payment_tools').notNull(),
-    monthlyTransactions: varchar('monthly_transactions', {
-      length: 100,
-    }).notNull(),
-    employeeCount: varchar('employee_count', { length: 50 }),
-    setupNeeds: text('setup_needs').notNull(),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .default(sql`(now())`)
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .default(sql`(now())`)
-      .notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.id], name: 'business_onboarding_forms_id' }),
-    unique('id').on(table.id),
-  ],
-);
+export const businessOnboardingForms = mysqlTable('business_onboarding_forms', {
+  id: serial().notNull(),
+  businessName: varchar('business_name', { length: 255 }).notNull(),
+  businessType: varchar('business_type', { length: 255 }).notNull(),
+  businessCategory: varchar('business_category', { length: 255 }).notNull(),
+  businessAddress: text('business_address').notNull(),
+  state: varchar({ length: 100 }).notNull(),
+  branchCount: varchar('branch_count', { length: 50 }).notNull(),
+  businessWebsite: varchar('business_website', { length: 255 }),
+  contactName: varchar('contact_name', { length: 255 }).notNull(),
+  contactRole: varchar('contact_role', { length: 100 }).notNull(),
+  contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
+  contactEmail: varchar('contact_email', { length: 255 }),
+  acceptsDigitalPayments: tinyint('accepts_digital_payments')
+    .default(0)
+    .notNull(),
+  paymentTools: text('payment_tools').notNull(),
+  monthlyTransactions: varchar('monthly_transactions', {
+    length: 100,
+  }).notNull(),
+  employeeCount: varchar('employee_count', { length: 50 }),
+  setupNeeds: text('setup_needs').notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' })
+    .default(sql`(now())`)
+    .notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' })
+    .default(sql`(now())`)
+    .notNull(),
+});
 
 export const businessPaymentTransactions = mysqlTable(
   'business_payment_transactions',
