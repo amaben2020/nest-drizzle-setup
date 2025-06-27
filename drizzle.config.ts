@@ -23,13 +23,13 @@ const ENV = process.env.NODE_ENV ?? 'development';
 const envFile = `.env.${ENV}`;
 
 // Try to load .env.{ENV}, else fallback to .env (for GitHub Actions)
-if (fs.existsSync(envFile)) {
-  dotenv.config({ path: envFile });
-  console.log(`✅ Loaded ${envFile}`);
-} else {
-  dotenv.config();
-  console.log(`⚠️  ${envFile} not found, loaded default .env instead`);
-}
+// if (fs.existsSync(envFile)) {
+//   dotenv.config({ path: envFile });
+//   console.log(`✅ Loaded ${envFile}`);
+// } else {
+//   dotenv.config();
+//   console.log(`⚠️  ${envFile} not found, loaded default .env instead`);
+// }
 
 export default {
   schema: './src/database/schema.ts',
