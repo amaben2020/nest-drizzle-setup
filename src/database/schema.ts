@@ -2107,4 +2107,5 @@ export const usersTest = mysqlTable('usersTest', {
   nickname: varchar('nickname', { length: 255 }),
   bestPal: varchar('best_pal', { length: 255 }),
   isOnline: varchar('is_online', { length: 255 }),
+  isBestFriend: boolean('is_best_friend').default(false),
 });

@@ -1,3 +1,75 @@
+# name: Sync Drizzle Schema on Merge
+
+# on:
+#   push:
+#     branches:
+#       - staging
+#       - main
+
+# jobs:
+#   sync-schema:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: ⬇️ Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: 🟢 Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
+
+#       - name: 📦 Install dependencies
+#         run: npm ci
+
+#       - name: Set correct NODE_ENV and write .env
+#         run: |
+#           if [ "${{ github.ref_name }}" = "main" ]; then
+#             echo "NODE_ENV=production" >> $GITHUB_ENV
+#             echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env.production
+#             echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env.production
+#             echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env.production
+#             echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env.production
+#             echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env.production
+#           else
+#             echo "NODE_ENV=staging" >> $GITHUB_ENV
+#             echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env.staging
+#             echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env.staging
+#             echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env.staging
+#             echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env.staging
+#             echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env.staging
+#           fi
+
+#       - name: 🧪 Create .env file for DB connection
+#         run: |
+#           echo "Preparing .env file..."
+#           if [ "${{ github.ref_name }}" = "main" ]; then
+#             echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env
+#             echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env
+#             echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env
+#             echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env
+#             echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env
+#           else
+#             echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env
+#             echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env
+#             echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env
+#             echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env
+#             echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env
+#           fi
+
+#       - name: 🧪 Pull remote schema
+#         run: npx drizzle-kit pull --config=drizzle.config.ts
+
+#       - name: 🔍 Generate schema diff
+#         run: npx drizzle-kit generate --config=drizzle.config.ts
+
+#       - name: 🚀 Push schema to DB
+#         run: |
+#           echo "Pushing schema to database..."
+#           if ! npx drizzle-kit push --config=drizzle.config.ts; then
+#             echo "❌ Push failed. Ensure the target DB is in sync and fix duplicate indexes or constraint issues."
+#             exit 1
+#           fi
 name: Sync Drizzle Schema on Merge
 
 on:
@@ -22,39 +94,26 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Set correct NODE_ENV and write .env
+      - name: 🛠 Set NODE_ENV and create .env.{env}
         run: |
           if [ "${{ github.ref_name }}" = "main" ]; then
             echo "NODE_ENV=production" >> $GITHUB_ENV
-            echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env.production
-            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env.production
-            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env.production
-            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env.production
-            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env.production
+            ENV_FILE=".env.production"
+            echo "🟢 Using production environment"
+            echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> $ENV_FILE
+            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> $ENV_FILE
+            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> $ENV_FILE
+            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> $ENV_FILE
+            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> $ENV_FILE
           else
             echo "NODE_ENV=staging" >> $GITHUB_ENV
-            echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env.staging
-            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env.staging
-            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env.staging
-            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env.staging
-            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env.staging
-          fi
-
-      - name: 🧪 Create .env file for DB connection
-        run: |
-          echo "Preparing .env file..."
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env
-            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env
-            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env
-            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env
-            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env
-          else
-            echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env
-            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env
-            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env
-            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env
-            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env
+            ENV_FILE=".env.staging"
+            echo "🟡 Using staging environment"
+            echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> $ENV_FILE
+            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> $ENV_FILE
+            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> $ENV_FILE
+            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> $ENV_FILE
+            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> $ENV_FILE
           fi
 
       - name: 🧪 Pull remote schema

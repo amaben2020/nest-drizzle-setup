@@ -71,6 +71,13 @@
       "when": 1751017276089,
       "tag": "0009_uneven_cobalt_man",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1751034396957,
+      "tag": "0010_mysterious_misty_knight",
+      "breakpoints": true
     }
   ]
 }
