@@ -36,13 +36,11 @@ export default {
   out: './drizzle/migrations',
   dialect: 'mysql',
   dbCredentials: {
-    host:
-      process.env.DB_HOST! ??
-      'd1kb8x1fu8rhcnej.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    port: Number(process.env.DB_PORT) || 3306,
-    user: process.env.DB_USERNAME! ?? 'oyd3i2rs2yb26lic',
-    password: process.env.DB_PASSWORD! ?? 'mpnfrleo095gheeb',
-    database: process.env.DB_DATABASE! ?? 'wz12oseoex68yd4p',
+    host: 'd1kb8x1fu8rhcnej.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    port: 3306,
+    user: 'oyd3i2rs2yb26lic',
+    password: 'mpnfrleo095gheeb',
+    database: 'wz12oseoex68yd4p',
   },
 };
 console.log('Updated');
