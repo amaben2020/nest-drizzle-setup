@@ -1,0 +1,1 @@
+ALTER TABLE `bus_airtime_trans` MODIFY COLUMN `id` bigint unsigned AUTO_INCREMENT NOT NULL;

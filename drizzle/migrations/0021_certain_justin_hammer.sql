@@ -1,0 +1,1 @@
+ALTER TABLE `bus_pay_trans` DROP INDEX `unique_bus_transaction`;
