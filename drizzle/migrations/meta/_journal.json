@@ -190,6 +190,13 @@
       "when": 1751044506919,
       "tag": "0026_clever_owl",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "5",
+      "when": 1751045102059,
+      "tag": "0027_shallow_hellfire_club",
+      "breakpoints": true
     }
   ]
 }

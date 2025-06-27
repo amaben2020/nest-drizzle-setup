@@ -1828,6 +1828,7 @@ export const usersTest = mysqlTable(
     isBestFriend: tinyint('is_best_friend').default(0),
     isNew: int('is_new'),
     isOld: int('is_old'),
+    isBrandNew: int('is_brand_new'),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'usersTest_id' })],
 );

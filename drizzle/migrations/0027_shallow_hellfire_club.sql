@@ -1,0 +1,1 @@
+ALTER TABLE `usersTest` ADD `is_brand_new` int;
