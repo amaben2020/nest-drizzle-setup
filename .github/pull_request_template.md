@@ -22,3 +22,5 @@ When you update or create new tables
 🚨 Warning: Avoid editing drizzle/migrations/\*.sql by hand unless you know what you're doing.
 
 Note: Sometimes its not so straightforward, correct the schema.ts file first then do step 2 again.
+
+npm run db:push:dev : this would pull in the latest changes in your schema file and update the database accordingly
