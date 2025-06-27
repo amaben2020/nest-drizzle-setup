@@ -12,6 +12,6 @@ export class AppService {
 
   async getUsers() {
     // return this.devDb.select().from(usersTest);
-    return this.devDb.select().from(schema.users);
+    return this.devDb.select().from(schema.usersTest);
   }
 }
