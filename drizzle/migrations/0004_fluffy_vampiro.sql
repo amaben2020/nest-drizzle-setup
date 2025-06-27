@@ -1,0 +1,1 @@
+ALTER TABLE `usersTest` ADD `best_pal` varchar(255);
