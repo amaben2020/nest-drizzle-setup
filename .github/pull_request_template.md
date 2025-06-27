@@ -23,6 +23,7 @@ When you update or create new tables
 
 Note: Sometimes its not so straightforward, correct the schema.ts file first then do step 2 again.
 
+ 
 if you see a message like this:
 Warning Found data-loss statements:
 · You're about to delete business_airtime_transactions table with 6 items
@@ -51,3 +52,6 @@ We have a db and wanna update current setup
 1. npm run introspect: pulls in fresh data from db
 2. npx drizzle-kit generate --config=drizzle.config.ts
 3. npm run db:push:dev
+=======
+npm run db:push:dev : this would pull in the latest changes in your schema file and update the database accordingly
+ 

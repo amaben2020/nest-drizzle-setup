@@ -1,21 +1,34 @@
 import { relations } from "drizzle-orm/relations";
-import { users, airtimeTransactions, billMatesFavourites } from "./schema";
+import { businessProfiles, businessBranches, businessDataTransactions, staffProfiles } from "./schema";
 
-export const airtimeTransactionsRelations = relations(airtimeTransactions, ({one}) => ({
-	user: one(users, {
-		fields: [airtimeTransactions.userId],
-		references: [users.id]
+export const businessBranchesRelations = relations(businessBranches, ({one, many}) => ({
+	businessProfile: one(businessProfiles, {
+		fields: [businessBranches.businessId],
+		references: [businessProfiles.id]
+	}),
+	businessDataTransactions: many(businessDataTransactions),
+}));
+
+export const businessProfilesRelations = relations(businessProfiles, ({many}) => ({
+	businessBranches: many(businessBranches),
+	businessDataTransactions: many(businessDataTransactions),
+}));
+
+export const businessDataTransactionsRelations = relations(businessDataTransactions, ({one}) => ({
+	businessBranch: one(businessBranches, {
+		fields: [businessDataTransactions.branchId],
+		references: [businessBranches.id]
+	}),
+	businessProfile: one(businessProfiles, {
+		fields: [businessDataTransactions.businessId],
+		references: [businessProfiles.id]
+	}),
+	staffProfile: one(staffProfiles, {
+		fields: [businessDataTransactions.staffId],
+		references: [staffProfiles.id]
 	}),
 }));
 
-export const usersRelations = relations(users, ({many}) => ({
-	airtimeTransactions: many(airtimeTransactions),
-	billMatesFavourites: many(billMatesFavourites),
-}));
-
-export const billMatesFavouritesRelations = relations(billMatesFavourites, ({one}) => ({
-	user: one(users, {
-		fields: [billMatesFavourites.userId],
-		references: [users.id]
-	}),
+export const staffProfilesRelations = relations(staffProfiles, ({many}) => ({
+	businessDataTransactions: many(businessDataTransactions),
 }));
