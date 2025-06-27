@@ -19,6 +19,7 @@ import {
   timestamp,
   date,
   check,
+  boolean,
 } from 'drizzle-orm/mysql-core';
 import { sql } from 'drizzle-orm';
 
@@ -2105,4 +2106,5 @@ export const usersTest = mysqlTable('usersTest', {
   name: varchar('name', { length: 255 }),
   nickname: varchar('nickname', { length: 255 }),
   bestPal: varchar('best_pal', { length: 255 }),
+  isOnline: varchar('is_online', { length: 255 }),
 });

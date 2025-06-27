@@ -67,17 +67,27 @@ export default {
   out: './drizzle/migrations',
   dialect: 'mysql',
   dbCredentials: {
-    // host: process.env.DB_HOST!,
-    host: 'xefi550t7t6tjn36.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    // port: Number(process.env.DB_PORT),
-    port: 3306,
-    //
-    // user: process.env.DB_USERNAME!,
-    user: 'upzul40u72ztzxld',
-    //
-    // password: process.env.DB_PASSWORD!,
-    password: 'gvvasc1hc8gqbb9y',
-    // database: process.env.DB_DATABASE!,
-    database: 'h78c90bd0sv0eh6n',
+    host: process.env.DB_HOST!,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USERNAME!,
+    password: process.env.DB_PASSWORD!,
+    database: process.env.DB_DATABASE!,
   },
+
+  // schema: './src/database/schema.ts',
+  // out: './drizzle/migrations',
+  // dialect: 'mysql',
+  // dbCredentials: {
+  //   // host: process.env.DB_HOST!,
+  //   host: 'xefi550t7t6tjn36.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+  //   // port: Number(process.env.DB_PORT),
+  //   port: 3306,
+  //   //
+  //   // user: process.env.DB_USERNAME!,
+  //   user: 'upzul40u72ztzxld',
+  //   //
+  //   // password: process.env.DB_PASSWORD!,
+  //   password: 'gvvasc1hc8gqbb9y',
+  //   // database: process.env.DB_DATABASE!,
+  //   database: 'h78c90bd0sv0eh6n',
 };
