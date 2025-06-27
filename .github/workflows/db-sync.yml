@@ -22,6 +22,24 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
+      - name: Set correct NODE_ENV and write .env
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "NODE_ENV=production" >> $GITHUB_ENV
+            echo "DB_HOST=${{ secrets.PRODUCTION_DB_HOST }}" >> .env.production
+            echo "DB_PORT=${{ secrets.PRODUCTION_DB_PORT }}" >> .env.production
+            echo "DB_USERNAME=${{ secrets.PRODUCTION_DB_USERNAME }}" >> .env.production
+            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" >> .env.production
+            echo "DB_DATABASE=${{ secrets.PRODUCTION_DB_DATABASE }}" >> .env.production
+          else
+            echo "NODE_ENV=staging" >> $GITHUB_ENV
+            echo "DB_HOST=${{ secrets.STAGING_DB_HOST }}" >> .env.staging
+            echo "DB_PORT=${{ secrets.STAGING_DB_PORT }}" >> .env.staging
+            echo "DB_USERNAME=${{ secrets.STAGING_DB_USERNAME }}" >> .env.staging
+            echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> .env.staging
+            echo "DB_DATABASE=${{ secrets.STAGING_DB_DATABASE }}" >> .env.staging
+          fi
+
       - name: 🧪 Create .env file for DB connection
         run: |
           echo "Preparing .env file..."
