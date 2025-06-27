@@ -1,0 +1,1 @@
+ALTER TABLE `bus_pay_trans` MODIFY COLUMN `id` bigint unsigned NOT NULL;

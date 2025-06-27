@@ -85,6 +85,104 @@
       "when": 1751036177226,
       "tag": "0011_great_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1751039672010,
+      "tag": "0012_young_starbolt",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1751039875093,
+      "tag": "0013_tough_fixer",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1751039951784,
+      "tag": "0014_left_luckman",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "5",
+      "when": 1751040243541,
+      "tag": "0015_outgoing_ben_grimm",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1751040348135,
+      "tag": "0016_material_lady_vermin",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1751040552889,
+      "tag": "0017_cool_vance_astro",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1751040713562,
+      "tag": "0018_known_boom_boom",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1751041011631,
+      "tag": "0019_green_mesmero",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1751041083399,
+      "tag": "0020_many_tana_nile",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "5",
+      "when": 1751041153638,
+      "tag": "0021_certain_justin_hammer",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "5",
+      "when": 1751041420725,
+      "tag": "0022_lazy_shadow_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "5",
+      "when": 1751041491848,
+      "tag": "0023_flippant_miracleman",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "5",
+      "when": 1751041535117,
+      "tag": "0024_harsh_warlock",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1751041715986,
+      "tag": "0025_clumsy_vanisher",
+      "breakpoints": true
     }
   ]
 }
