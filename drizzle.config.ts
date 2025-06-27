@@ -45,3 +45,4 @@ export default {
     database: process.env.DB_DATABASE! ?? 'wz12oseoex68yd4p',
   },
 };
+console.log('Updated');
