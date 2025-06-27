@@ -473,7 +473,10 @@ export const businessOnboardingForms = mysqlTable(
 export const businessPaymentTransactions = mysqlTable(
   'business_payment_transactions',
   {
-    id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
+    id: bigint({ mode: 'number', unsigned: true })
+      .primaryKey()
+      .autoincrement()
+      .notNull(),
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
     branchId: bigint('branch_id', { mode: 'number', unsigned: true }),
     staffId: bigint('staff_id', { mode: 'number', unsigned: true }),
@@ -526,13 +529,6 @@ export const businessPaymentTransactions = mysqlTable(
     ]),
     sentBy: varchar('sent_by', { length: 20 }),
   },
-  (table) => [
-    primaryKey({
-      columns: [table.id],
-      name: 'business_payment_transactions_id',
-    }),
-    unique('unique_bus_transaction').on(table.transactionId, table.businessId),
-  ],
 );
 
 export const businessPins = mysqlTable(

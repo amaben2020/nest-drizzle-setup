@@ -1,0 +1,1 @@
+ALTER TABLE `business_payment_transactions` ADD PRIMARY KEY(`id`);
