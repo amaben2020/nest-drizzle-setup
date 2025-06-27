@@ -19,6 +19,7 @@ import {
   timestamp,
   date,
   check,
+  boolean,
 } from 'drizzle-orm/mysql-core';
 import { sql } from 'drizzle-orm';
 
@@ -433,42 +434,35 @@ export const businessFees = mysqlTable(
   (table) => [primaryKey({ columns: [table.id], name: 'business_fees_id' })],
 );
 
-export const businessOnboardingForms = mysqlTable(
-  'business_onboarding_forms',
-  {
-    id: serial().notNull(),
-    businessName: varchar('business_name', { length: 255 }).notNull(),
-    businessType: varchar('business_type', { length: 255 }).notNull(),
-    businessCategory: varchar('business_category', { length: 255 }).notNull(),
-    businessAddress: text('business_address').notNull(),
-    state: varchar({ length: 100 }).notNull(),
-    branchCount: varchar('branch_count', { length: 50 }).notNull(),
-    businessWebsite: varchar('business_website', { length: 255 }),
-    contactName: varchar('contact_name', { length: 255 }).notNull(),
-    contactRole: varchar('contact_role', { length: 100 }).notNull(),
-    contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
-    contactEmail: varchar('contact_email', { length: 255 }),
-    acceptsDigitalPayments: tinyint('accepts_digital_payments')
-      .default(0)
-      .notNull(),
-    paymentTools: text('payment_tools').notNull(),
-    monthlyTransactions: varchar('monthly_transactions', {
-      length: 100,
-    }).notNull(),
-    employeeCount: varchar('employee_count', { length: 50 }),
-    setupNeeds: text('setup_needs').notNull(),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .default(sql`(now())`)
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .default(sql`(now())`)
-      .notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.id], name: 'business_onboarding_forms_id' }),
-    unique('id').on(table.id),
-  ],
-);
+export const businessOnboardingForms = mysqlTable('business_onboarding_forms', {
+  id: serial().primaryKey(),
+  businessName: varchar('business_name', { length: 255 }).notNull(),
+  businessType: varchar('business_type', { length: 255 }).notNull(),
+  businessCategory: varchar('business_category', { length: 255 }).notNull(),
+  businessAddress: text('business_address').notNull(),
+  state: varchar({ length: 100 }).notNull(),
+  branchCount: varchar('branch_count', { length: 50 }).notNull(),
+  businessWebsite: varchar('business_website', { length: 255 }),
+  contactName: varchar('contact_name', { length: 255 }).notNull(),
+  contactRole: varchar('contact_role', { length: 100 }).notNull(),
+  contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
+  contactEmail: varchar('contact_email', { length: 255 }),
+  acceptsDigitalPayments: tinyint('accepts_digital_payments')
+    .default(0)
+    .notNull(),
+  paymentTools: text('payment_tools').notNull(),
+  monthlyTransactions: varchar('monthly_transactions', {
+    length: 100,
+  }).notNull(),
+  employeeCount: varchar('employee_count', { length: 50 }),
+  setupNeeds: text('setup_needs').notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' })
+    .default(sql`(now())`)
+    .notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' })
+    .default(sql`(now())`)
+    .notNull(),
+});
 
 export const businessPaymentTransactions = mysqlTable(
   'business_payment_transactions',
@@ -1324,7 +1318,7 @@ export const paymentLinks = mysqlTable(
     updatedAt: datetime('updated_at', { mode: 'string' }).default(
       sql`(CURRENT_TIMESTAMP)`,
     ),
-    apiResponse: varchar('api_response', { length: 1500 }),
+    apiResponse: text('api_response'),
     accountNumber: varchar('account_number', { length: 15 }),
     bank: varchar({ length: 60 }),
     reference: varchar({ length: 20 }),
@@ -1332,8 +1326,8 @@ export const paymentLinks = mysqlTable(
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
     narration: varchar({ length: 255 }),
     type: mysqlEnum(['personal', 'business']).default('personal').notNull(),
-    requestBody: varchar('request_body', { length: 10000 }),
-    responseBody: varchar('response_body', { length: 10000 }),
+    requestBody: text('request_body'),
+    responseBody: text('response_body'),
     idempotencyKey: varchar('idempotency_key', { length: 100 }),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'payment_links_id' })],
@@ -2112,4 +2106,7 @@ export const usersTest = mysqlTable('usersTest', {
   name: varchar('name', { length: 255 }),
   nickname: varchar('nickname', { length: 255 }),
   bestPal: varchar('best_pal', { length: 255 }),
+  isOnline: varchar('is_online', { length: 255 }),
+  isBestFriend: boolean('is_best_friend').default(false),
+  isNew: int('is_new'),
 });

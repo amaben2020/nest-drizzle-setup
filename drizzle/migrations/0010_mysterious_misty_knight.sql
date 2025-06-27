@@ -1,0 +1,1 @@
+ALTER TABLE `usersTest` ADD `is_best_friend` boolean DEFAULT false;

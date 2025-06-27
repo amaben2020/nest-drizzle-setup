@@ -27,9 +27,7 @@ export const accessibilities = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     accessDaemon: varchar('access_daemon', { length: 1000 }),
     refDaemon: varchar('ref_daemon', { length: 1000 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'accessibilities_id' })],
 );
@@ -40,9 +38,7 @@ export const adeptAccess = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     accessToken: varchar('access_token', { length: 1000 }),
     ttl: datetime({ mode: 'string' }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'adept_access_id' })],
 );
@@ -54,9 +50,7 @@ export const airtimeProviders = mysqlTable(
     name: varchar({ length: 20 }).notNull(),
     slug: varchar({ length: 20 }).notNull(),
     image: varchar({ length: 200 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'airtime_providers_id' }),
@@ -81,12 +75,8 @@ export const airtimeTransactions = mysqlTable(
       .default('pending')
       .notNull(),
     vendRequestBody: varchar('vend_request_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
     balanceBefore: decimal('balance_before', { precision: 15, scale: 2 })
       .default('0.00')
@@ -96,8 +86,8 @@ export const airtimeTransactions = mysqlTable(
       .notNull(),
   },
   (table) => [
-    index('idx_user_id').on(table.userId),
     index('idx_receiver').on(table.receiver),
+    index('idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'airtime_transactions_id' }),
     unique('unq_airtime_txn').on(table.transactionId, table.userId),
   ],
@@ -135,7 +125,7 @@ export const appSettings = mysqlTable(
       .default('20')
       .notNull(),
     createdAt: datetime({ mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     noKycMaxAmount: decimal('no_kyc_max_amount', { precision: 8, scale: 2 })
       .default('20000.00')
@@ -208,9 +198,7 @@ export const banks = mysqlTable(
     bankCode: varchar('bank_code', { length: 20 }),
     name: varchar({ length: 150 }).notNull(),
     logoUrl: varchar('logo_url', { length: 100 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'banks_id' })],
 );
@@ -224,17 +212,15 @@ export const beneficiaries = mysqlTable(
     identifier: varchar({ length: 50 }).notNull(),
     type: mysqlEnum(['phone', 'blue-user']).notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     businessBeneficiary: bigint('business_beneficiary', { mode: 'number' }),
     name: varchar({ length: 255 }),
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
   },
   (table) => [
     index('beneficiary_id').on(table.beneficiaryId),
-    index('user_id').on(table.userId),
     index('idx_business_id').on(table.businessId),
+    index('user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'beneficiaries_id' }),
   ],
 );
@@ -258,12 +244,8 @@ export const billMatesFavourites = mysqlTable(
     name: varchar({ length: 255 }).notNull(),
     slug: varchar({ length: 255 }),
     state: varchar({ length: 255 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     meterCategory: varchar('meter_category', { length: 100 }),
   },
   (table) => [
@@ -293,11 +275,11 @@ export const billMatesTransactions = mysqlTable(
     receiver: varchar({ length: 25 }),
   },
   (table) => [
-    index('idx_user_id').on(table.userId),
-    index('idx_transaction_reference').on(table.transactionReference),
-    index('idx_type').on(table.type),
     index('idx_created_at').on(table.createdAt),
     index('idx_status').on(table.status),
+    index('idx_transaction_reference').on(table.transactionReference),
+    index('idx_type').on(table.type),
+    index('idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'bill_mates_transactions_id' }),
   ],
 );
@@ -307,9 +289,7 @@ export const blueAdminRoles = mysqlTable(
   {
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     name: varchar({ length: 50 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'blue_admin_roles_id' })],
 );
@@ -325,11 +305,9 @@ export const blueAdmins = mysqlTable(
     displayPicture: varchar('display_picture', { length: 255 }),
     passwordChangedAt: varchar('password_changed_at', { length: 30 }),
     role: varchar({ length: 20 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
     updatedAt: datetime('updated_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'blue_admins_id' })],
@@ -344,9 +322,7 @@ export const businessBranches = mysqlTable(
     staffSize: varchar('staff_size', { length: 20 }),
     location: varchar({ length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     isActive: tinyint('is_active').default(1).notNull(),
   },
   (table) => [
@@ -390,12 +366,8 @@ export const businessDataTransactions = mysqlTable(
     providerSlug: varchar('provider_slug', { length: 30 }),
     accessToken: varchar('access_token', { length: 40 }),
     vendRequestBody: varchar('vend_request_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     code: varchar({ length: 10 }),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
   },
@@ -410,9 +382,7 @@ export const businessDevices = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     fcmToken: varchar('fcm_token', { length: 255 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'business_devices_id' })],
 );
@@ -432,35 +402,42 @@ export const businessFees = mysqlTable(
   (table) => [primaryKey({ columns: [table.id], name: 'business_fees_id' })],
 );
 
-export const businessOnboardingForms = mysqlTable('business_onboarding_forms', {
-  id: serial().notNull(),
-  businessName: varchar('business_name', { length: 255 }).notNull(),
-  businessType: varchar('business_type', { length: 255 }).notNull(),
-  businessCategory: varchar('business_category', { length: 255 }).notNull(),
-  businessAddress: text('business_address').notNull(),
-  state: varchar({ length: 100 }).notNull(),
-  branchCount: varchar('branch_count', { length: 50 }).notNull(),
-  businessWebsite: varchar('business_website', { length: 255 }),
-  contactName: varchar('contact_name', { length: 255 }).notNull(),
-  contactRole: varchar('contact_role', { length: 100 }).notNull(),
-  contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
-  contactEmail: varchar('contact_email', { length: 255 }),
-  acceptsDigitalPayments: tinyint('accepts_digital_payments')
-    .default(0)
-    .notNull(),
-  paymentTools: text('payment_tools').notNull(),
-  monthlyTransactions: varchar('monthly_transactions', {
-    length: 100,
-  }).notNull(),
-  employeeCount: varchar('employee_count', { length: 50 }),
-  setupNeeds: text('setup_needs').notNull(),
-  createdAt: timestamp('created_at', { mode: 'string' })
-    .default(sql`(now())`)
-    .notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'string' })
-    .default(sql`(now())`)
-    .notNull(),
-});
+export const businessOnboardingForms = mysqlTable(
+  'business_onboarding_forms',
+  {
+    id: serial().notNull(),
+    businessName: varchar('business_name', { length: 255 }).notNull(),
+    businessType: varchar('business_type', { length: 255 }).notNull(),
+    businessCategory: varchar('business_category', { length: 255 }).notNull(),
+    businessAddress: text('business_address').notNull(),
+    state: varchar({ length: 100 }).notNull(),
+    branchCount: varchar('branch_count', { length: 50 }).notNull(),
+    businessWebsite: varchar('business_website', { length: 255 }),
+    contactName: varchar('contact_name', { length: 255 }).notNull(),
+    contactRole: varchar('contact_role', { length: 100 }).notNull(),
+    contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
+    contactEmail: varchar('contact_email', { length: 255 }),
+    acceptsDigitalPayments: tinyint('accepts_digital_payments')
+      .default(0)
+      .notNull(),
+    paymentTools: text('payment_tools').notNull(),
+    monthlyTransactions: varchar('monthly_transactions', {
+      length: 100,
+    }).notNull(),
+    employeeCount: varchar('employee_count', { length: 50 }),
+    setupNeeds: text('setup_needs').notNull(),
+    createdAt: timestamp('created_at', { mode: 'string' })
+      .default(sql`(now())`)
+      .notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string' })
+      .default(sql`(now())`)
+      .notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.id], name: 'business_onboarding_forms_id' }),
+    unique('id').on(table.id),
+  ],
+);
 
 export const businessPaymentTransactions = mysqlTable(
   'business_payment_transactions',
@@ -508,9 +485,7 @@ export const businessPaymentTransactions = mysqlTable(
     requestBody: varchar('request_body', { length: 1000 }),
     responseBody: varchar('response_body', { length: 1000 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     receiverType: mysqlEnum('receiver_type', [
       'personal',
       'business',
@@ -523,7 +498,6 @@ export const businessPaymentTransactions = mysqlTable(
       columns: [table.id],
       name: 'business_payment_transactions_id',
     }),
-    unique('unique_bus_transaction').on(table.transactionId, table.businessId),
   ],
 );
 
@@ -537,10 +511,10 @@ export const businessPins = mysqlTable(
     }).notNull(),
     passcode: varchar({ length: 255 }),
     createdAt: datetime('created_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     updatedAt: datetime('updated_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     resetPinStatus: tinyint('reset_pin_status').default(0),
   },
@@ -581,12 +555,8 @@ export const businessPowerTransactions = mysqlTable(
       precision: 10,
       scale: 2,
     }).default('100.00'),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     kct1: varchar('kct_1', { length: 100 }),
     kct2: varchar('kct_2', { length: 100 }),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
@@ -612,10 +582,10 @@ export const businessProfiles = mysqlTable(
     lga: varchar({ length: 80 }),
     level: int().default(0).notNull(),
     createdAt: datetime('created_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     updatedAt: datetime('updated_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     cacNumber: varchar('cac_number', { length: 50 }),
     staffSize: varchar('staff_size', { length: 100 }),
@@ -637,9 +607,7 @@ export const businessRecoveryInfos = mysqlTable(
     recoveryCode: varchar('recovery_code', { length: 40 }),
     recoveryPhone: varchar('recovery_phone', { length: 20 }),
     createdAt: datetime('created_at', { mode: 'string' }),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     businessId: bigint('business_id', { mode: 'number' }).notNull(),
   },
   (table) => [
@@ -654,9 +622,7 @@ export const businessSecurityQuestions = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     createdAt: datetime('created_at', { mode: 'string' }),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     question: varchar({ length: 200 }).notNull(),
     answer: varchar({ length: 200 }).notNull(),
   },
@@ -676,9 +642,7 @@ export const businessSettlementAccounts = mysqlTable(
     accountName: varchar('account_name', { length: 255 }),
     bankName: varchar('bank_name', { length: 200 }).notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({
@@ -705,9 +669,7 @@ export const businessShareholders = mysqlTable(
     verified: tinyint({ unsigned: true }).default(0),
     designation: varchar({ length: 100 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('business_id').on(table.businessId),
@@ -752,7 +714,7 @@ export const businessTransactionHistories = mysqlTable(
       .default('0.00')
       .notNull(),
     createdAt: datetime('created_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     balanceBefore: decimal('balance_before', { precision: 15, scale: 2 })
       .default('0.00')
@@ -762,13 +724,13 @@ export const businessTransactionHistories = mysqlTable(
       .notNull(),
   },
   (table) => [
-    index('idx_business_id').on(table.businessId),
-    index('idx_transaction_reference').on(table.transactionId),
-    index('idx_payment_mode').on(table.paymentMode),
-    index('idx_status').on(table.status),
-    index('idx_created_at').on(table.createdAt),
     index('fk_txnhistory_branch_id').on(table.branchId),
     index('fk_txnhistory_staff_id').on(table.staffId),
+    index('idx_business_id').on(table.businessId),
+    index('idx_created_at').on(table.createdAt),
+    index('idx_payment_mode').on(table.paymentMode),
+    index('idx_status').on(table.status),
+    index('idx_transaction_reference').on(table.transactionId),
     primaryKey({
       columns: [table.id],
       name: 'business_transaction_histories_id',
@@ -803,12 +765,8 @@ export const businessTvTransactions = mysqlTable(
       scale: 2,
     }).default('100.00'),
     vendRequestBody: varchar('vend_request_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
   },
   (table) => [
@@ -851,14 +809,12 @@ export const businessUsers = mysqlTable(
       unsigned: true,
     }).default(0),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'business_users_id' }),
-    unique('phone').on(table.phone),
     unique('idx_phone_191uuwqwmc12').on(table.phone),
+    unique('phone').on(table.phone),
   ],
 );
 
@@ -879,9 +835,7 @@ export const businessWalletAccounts = mysqlTable(
     requestBody: varchar('request_body', { length: 1000 }),
     responseBody: varchar('response_body', { length: 1000 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('business_id').on(table.businessId),
@@ -896,10 +850,10 @@ export const businessWalletSnapshots = mysqlTable(
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
     type: mysqlEnum(['credit', 'debit']).notNull(),
     createdAt: datetime('created_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     updatedAt: datetime('updated_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     id: int().autoincrement().notNull(),
     transactionId: varchar('transaction_id', { length: 20 }).notNull(),
@@ -925,10 +879,10 @@ export const businessWallets = mysqlTable(
     balance: decimal({ precision: 15, scale: 2 }).default('0.00').notNull(),
     walletId: varchar('wallet_id', { length: 20 }).notNull(),
     createdAt: datetime('created_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     updatedAt: datetime('updated_at', { mode: 'string', fsp: 6 })
-      .default(sql`(CURRENT_TIMESTAMP(6))`)
+      .default(sql`(now(6))`)
       .notNull(),
     walletCode: varchar('wallet_code', { length: 20 }).notNull(),
   },
@@ -950,12 +904,12 @@ export const dashmeIdempotencyRecords = mysqlTable(
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
   },
   (table) => [
+    index('created_at').on(table.createdAt),
     index('transaction_id').on(
       table.transactionId,
       table.userId,
       table.operationType,
     ),
-    index('created_at').on(table.createdAt),
     primaryKey({ columns: [table.id], name: 'dashme_idempotency_records_id' }),
   ],
 );
@@ -983,17 +937,15 @@ export const dashmeTransactions = mysqlTable(
       .notNull(),
     narration: varchar({ length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     dueAt: datetime('due_at', { mode: 'string' }).notNull(),
   },
   (table) => [
-    index('user_id').on(table.userId),
-    index('receiver_id').on(table.receiverId),
-    index('idx_status').on(table.status),
     index('idx_created_at').on(table.createdAt),
     index('idx_payment_mode').on(table.paymentMode),
+    index('idx_status').on(table.status),
+    index('receiver_id').on(table.receiverId),
+    index('user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'dashme_transactions_id' }),
     unique('idx_transaction_id').on(table.transactionId),
     unique('unique_transaction').on(table.transactionId, table.userId),
@@ -1029,7 +981,7 @@ export const dataPackages = mysqlTable(
     validity: varchar({ length: 100 }),
     provider: varchar({ length: 10 }).notNull(),
     createdAt: datetime('created_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     providerSlug: varchar('provider_slug', { length: 10 }).notNull(),
   },
@@ -1043,9 +995,7 @@ export const dataProviders = mysqlTable(
     name: varchar({ length: 20 }).notNull(),
     slug: varchar({ length: 20 }).notNull(),
     image: varchar({ length: 200 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'data_providers_id' })],
 );
@@ -1071,12 +1021,8 @@ export const dataTransactions = mysqlTable(
     providerSlug: varchar('provider_slug', { length: 30 }),
     accessToken: varchar('access_token', { length: 40 }),
     vendRequestBody: varchar('vend_request_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     code: varchar({ length: 10 }),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
     balanceBefore: decimal('balance_before', { precision: 15, scale: 2 })
@@ -1087,8 +1033,8 @@ export const dataTransactions = mysqlTable(
       .notNull(),
   },
   (table) => [
-    index('idx_user_id').on(table.userId),
     index('idx_receiver').on(table.receiver),
+    index('idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'data_transactions_id' }),
     unique('unq_airtime_txn').on(table.transactionId, table.userId),
   ],
@@ -1099,9 +1045,7 @@ export const deletedAccounts = mysqlTable(
   {
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     reasonId: bigint('reason_id', { mode: 'number', unsigned: true }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('reason_id').on(table.reasonId),
@@ -1127,9 +1071,7 @@ export const flaggedUsers = mysqlTable(
     reason: text().notNull(),
     userId: bigint('user_id', { mode: 'number', unsigned: true }).notNull(),
     adminId: bigint('admin_id', { mode: 'number', unsigned: true }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('idx_user_id').on(table.userId),
@@ -1145,9 +1087,7 @@ export const irchgBanks = mysqlTable(
     bankCode: varchar('bank_code', { length: 20 }),
     name: varchar({ length: 150 }).notNull(),
     logoUrl: varchar('logo_url', { length: 100 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'irchg_banks_id' })],
 );
@@ -1162,9 +1102,7 @@ export const irechargeDataPackages = mysqlTable(
     price: decimal({ precision: 12, scale: 2, unsigned: true })
       .default('0.00')
       .notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'irecharge_data_packages_id' }),
@@ -1188,9 +1126,7 @@ export const irechargePowerProviders = mysqlTable(
       scale: 2,
       unsigned: true,
     }).default('0.00'),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'irecharge_power_providers_id' }),
@@ -1205,9 +1141,7 @@ export const irechargeTvPackages = mysqlTable(
     network: varchar({ length: 15 }).notNull(),
     price: decimal({ precision: 12, scale: 2, unsigned: true }).default('0.00'),
     code: varchar({ length: 100 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'irecharge_tv_packages_id' }),
@@ -1230,9 +1164,7 @@ export const kycs = mysqlTable(
     frontCover: varchar('front_cover', { length: 300 }),
     backCover: varchar('back_cover', { length: 300 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     documents: varchar({ length: 3000 }),
   },
   (table) => [
@@ -1260,9 +1192,7 @@ export const notifications = mysqlTable(
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     status: tinyint({ unsigned: true }).default(0),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('user_id').on(table.userId),
@@ -1278,9 +1208,7 @@ export const otps = mysqlTable(
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     code: varchar({ length: 10 }).notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
   },
   (table) => [
@@ -1314,13 +1242,9 @@ export const paymentLinks = mysqlTable(
     platformUsed: varchar('platform_used', { length: 20 }),
     receiverName: varchar('receiver_name', { length: 255 }),
     batch: varchar({ length: 120 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    apiResponse: varchar('api_response', { length: 1500 }),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
+    apiResponse: text('api_response'),
     accountNumber: varchar('account_number', { length: 15 }),
     bank: varchar({ length: 60 }),
     reference: varchar({ length: 20 }),
@@ -1328,8 +1252,8 @@ export const paymentLinks = mysqlTable(
     businessId: bigint('business_id', { mode: 'number', unsigned: true }),
     narration: varchar({ length: 255 }),
     type: mysqlEnum(['personal', 'business']).default('personal').notNull(),
-    requestBody: varchar('request_body', { length: 10000 }),
-    responseBody: varchar('response_body', { length: 10000 }),
+    requestBody: text('request_body'),
+    responseBody: text('response_body'),
     idempotencyKey: varchar('idempotency_key', { length: 100 }),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'payment_links_id' })],
@@ -1356,9 +1280,7 @@ export const paystackBanks = mysqlTable(
     bankCode: varchar('bank_code', { length: 20 }),
     name: varchar({ length: 150 }).notNull(),
     logoUrl: varchar('logo_url', { length: 100 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'paystack_banks_id' })],
 );
@@ -1372,9 +1294,7 @@ export const pilotTesters = mysqlTable(
     email: varchar({ length: 150 }).notNull(),
     phone: varchar({ length: 20 }).notNull(),
     platform: text().notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'pilot_testers_id' }),
@@ -1390,9 +1310,7 @@ export const pins = mysqlTable(
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     passcode: varchar({ length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('user_id').on(table.userId),
@@ -1408,9 +1326,7 @@ export const powerProviders = mysqlTable(
     name: varchar({ length: 80 }).notNull(),
     slug: varchar({ length: 10 }).notNull(),
     locations: varchar({ length: 255 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'power_providers_id' })],
 );
@@ -1444,12 +1360,8 @@ export const powerTransactions = mysqlTable(
       precision: 10,
       scale: 2,
     }).default('100.00'),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     kct1: varchar('kct_1', { length: 100 }),
     kct2: varchar('kct_2', { length: 100 }),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
@@ -1461,9 +1373,9 @@ export const powerTransactions = mysqlTable(
       .notNull(),
   },
   (table) => [
-    index('idx_user_id').on(table.userId),
     index('idx_meter_type').on(table.meterType),
     index('idx_receiver').on(table.receiver),
+    index('idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'power_transactions_id' }),
     unique('unq_airtime_txn').on(table.transactionId, table.userId),
   ],
@@ -1486,9 +1398,7 @@ export const recoveryInfos = mysqlTable(
     recoveryCode: varchar('recovery_code', { length: 255 }),
     recoveryPhone: varchar('recovery_phone', { length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('user_id').on(table.userId),
@@ -1530,9 +1440,7 @@ export const securityQuestions = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     userId: bigint('user_id', { mode: 'number', unsigned: true }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     question: varchar({ length: 200 }).notNull(),
     answer: varchar({ length: 200 }).notNull(),
   },
@@ -1549,9 +1457,7 @@ export const smsLogs = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     requestBody: varchar('request_body', { length: 1000 }),
     responseBody: varchar('response_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'sms_logs_id' })],
 );
@@ -1567,10 +1473,10 @@ export const staffProfiles = mysqlTable(
     passwordChangedAt: varchar('password_changed_at', { length: 50 }),
     isActive: tinyint('is_active').default(1).notNull(),
     createdAt: datetime('created_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     updatedAt: datetime('updated_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
     ownerId: bigint('owner_id', { mode: 'number' }),
     role: mysqlEnum(['admin', 'cashier']).notNull(),
@@ -1590,9 +1496,7 @@ export const staffRoles = mysqlTable(
   {
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     name: varchar({ length: 50 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'staff_roles_id' })],
 );
@@ -1605,9 +1509,7 @@ export const tempAccounts = mysqlTable(
     accountName: varchar('account_name', { length: 100 }).notNull(),
     accountNumber: varchar('account_number', { length: 50 }).notNull(),
     bankId: varchar('bank_id', { length: 50 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
     bankName: varchar('bank_name', { length: 200 }).notNull(),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'temp_accounts_id' })],
@@ -1620,9 +1522,7 @@ export const tempRecoveryPhones = mysqlTable(
     reference: varchar({ length: 30 }).notNull(),
     oldPhone: varchar('old_phone', { length: 15 }).notNull(),
     newPhone: varchar('new_phone', { length: 15 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'temp_recovery_phones_id' }),
@@ -1678,10 +1578,10 @@ export const transactionHistories = mysqlTable(
     narration: varchar({ length: 300 }),
   },
   (table) => [
-    index('user_id').on(table.userId),
-    index('idx_payment_mode').on(table.paymentMode),
     index('idx_created_at').on(table.createdAt),
+    index('idx_payment_mode').on(table.paymentMode),
     index('idx_transaction_reference').on(table.transactionReference),
+    index('user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'transaction_histories_id' }),
   ],
 );
@@ -1724,9 +1624,7 @@ export const transactions = mysqlTable(
       .notNull(),
     email: varchar({ length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     employeeId: bigint('employee_id', { mode: 'number' }),
     narration: varchar({ length: 255 }),
     requestBody: varchar('request_body', { length: 1000 }),
@@ -1743,10 +1641,10 @@ export const transactions = mysqlTable(
     branchId: bigint('branch_id', { mode: 'number' }),
   },
   (table) => [
-    index('user_id').on(table.userId),
-    index('idx_status').on(table.status),
     index('idx_created_at').on(table.createdAt),
     index('idx_payment_mode').on(table.paymentMode),
+    index('idx_status').on(table.status),
+    index('user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'transactions_id' }),
     unique('idx_transaction_id').on(table.transactionId),
     unique('unique_transaction').on(table.transactionId, table.userId),
@@ -1764,7 +1662,7 @@ export const tvPackages = mysqlTable(
       .default('0.00')
       .notNull(),
     createdAt: datetime('created_at', { mode: 'string' })
-      .default(sql`(CURRENT_TIMESTAMP)`)
+      .default(sql`(now())`)
       .notNull(),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'tv_packages_id' })],
@@ -1776,9 +1674,7 @@ export const tvProviders = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     name: varchar({ length: 80 }).notNull(),
     slug: varchar({ length: 10 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
     image: varchar({ length: 200 }).notNull(),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'tv_providers_id' })],
@@ -1809,12 +1705,8 @@ export const tvTransactions = mysqlTable(
       scale: 2,
     }).default('100.00'),
     vendRequestBody: varchar('vend_request_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     vendResponseBody: varchar('vend_response_body', { length: 1500 }),
     balanceBefore: decimal('balance_before', { precision: 15, scale: 2 })
       .default('0.00')
@@ -1824,8 +1716,8 @@ export const tvTransactions = mysqlTable(
       .notNull(),
   },
   (table) => [
-    index('idx_user_id').on(table.userId),
     index('idx_receiver').on(table.receiver),
+    index('idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'tv_transactions_id' }),
     unique('unq_airtime_txn').on(table.transactionId, table.userId),
   ],
@@ -1840,9 +1732,7 @@ export const userAccounts = mysqlTable(
     accountNumber: varchar('account_number', { length: 255 }),
     accountName: varchar('account_name', { length: 255 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     bankName: varchar('bank_name', { length: 50 }).notNull(),
   },
   (table) => [
@@ -1864,12 +1754,8 @@ export const userCardDetails = mysqlTable(
     expMonth: varchar('exp_month', { length: 20 }).notNull(),
     expYear: varchar('exp_year', { length: 20 }).notNull(),
     cardType: varchar('card_type', { length: 20 }).notNull(),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     firstName: varchar('first_name', { length: 60 }),
     lastName: varchar('last_name', { length: 60 }),
     bank: varchar({ length: 60 }),
@@ -1886,9 +1772,7 @@ export const userTokens = mysqlTable(
     id: bigint({ mode: 'number', unsigned: true }).autoincrement().notNull(),
     userId: bigint('user_id', { mode: 'number', unsigned: true }).notNull(),
     fcmToken: varchar('fcm_token', { length: 255 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('user_id').on(table.userId),
@@ -1923,9 +1807,7 @@ export const users = mysqlTable(
     kycStatus: tinyint('kyc_status', { unsigned: true }).default(0),
     kyc: mysqlEnum(['basic', 'intermediate', 'pro']).default('basic').notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     index('idx_id').on(table.id),
@@ -1939,6 +1821,10 @@ export const usersTest = mysqlTable(
   {
     id: int().autoincrement().notNull(),
     email: varchar({ length: 255 }),
+    name: varchar({ length: 255 }),
+    nickname: varchar({ length: 255 }),
+    bestPal: varchar('best_pal', { length: 255 }),
+    isOnline: varchar('is_online', { length: 255 }),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'usersTest_id' })],
 );
@@ -1966,12 +1852,8 @@ export const ussdWithdrawals = mysqlTable(
     }),
     transferRequestBody: varchar('transfer_request_body', { length: 500 }),
     transferResponseBody: varchar('transfer_response_body', { length: 1000 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [primaryKey({ columns: [table.id], name: 'ussd_withdrawals_id' })],
 );
@@ -1990,14 +1872,12 @@ export const walletAccounts = mysqlTable(
     requestBody: varchar('request_body', { length: 1000 }),
     responseBody: varchar('response_body', { length: 1000 }),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     bankLogo: varchar('bank_logo', { length: 255 }),
   },
   (table) => [
-    index('wallet_id').on(table.walletId),
     index('user_id').on(table.userId),
+    index('wallet_id').on(table.walletId),
     primaryKey({ columns: [table.id], name: 'wallet_accounts_id' }),
     unique('idx_user_id').on(table.userId),
   ],
@@ -2020,18 +1900,16 @@ export const walletSnapshots = mysqlTable(
     }).notNull(),
     type: mysqlEnum(['credit', 'debit']).notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     transactionReference: varchar('transaction_reference', { length: 20 }),
     isNew: tinyint('is_new').default(0).notNull(),
   },
   (table) => [
-    index('wallet_id').on(table.walletId),
     index('idx_transaction_reference').on(table.transactionReference),
-    index('ws_idx_user_id').on(table.userId),
+    index('wallet_id').on(table.walletId),
     index('ws_idx_created_at').on(table.createdAt),
     index('ws_idx_type').on(table.type),
+    index('ws_idx_user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'wallet_snapshots_id' }),
     unique('unique_user_transaction_type').on(
       table.userId,
@@ -2052,17 +1930,15 @@ export const wallets = mysqlTable(
     ),
     walletId: varchar('wallet_id', { length: 20 }).notNull(),
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
-    updatedAt: datetime('updated_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    updatedAt: datetime('updated_at', { mode: 'string' }).default(sql`(now())`),
     walletCode: varchar('wallet_code', { length: 20 }).notNull(),
   },
   (table) => [
     index('user_id').on(table.userId),
     primaryKey({ columns: [table.id], name: 'wallets_id' }),
-    unique('wallet_code').on(table.walletId),
-    unique('idx_wallet_code').on(table.walletId),
     unique('idx_user_id').on(table.userId),
+    unique('idx_wallet_code').on(table.walletId),
+    unique('wallet_code').on(table.walletId),
     check('balance_non_negative', sql`(\`balance\` >= 0)`),
   ],
 );
@@ -2078,9 +1954,7 @@ export const withdrawCredentials = mysqlTable(
     secretPwd: varchar('secret_pwd', { length: 50 }),
     secretPin: varchar('secret_pin', { length: 50 }),
     chargeRate: decimal('charge_rate', { precision: 5, scale: 0 }),
-    createdAt: datetime('created_at', { mode: 'string' }).default(
-      sql`(CURRENT_TIMESTAMP)`,
-    ),
+    createdAt: datetime('created_at', { mode: 'string' }).default(sql`(now())`),
   },
   (table) => [
     primaryKey({ columns: [table.id], name: 'withdraw_credentials_id' }),
@@ -2098,12 +1972,12 @@ export const withdrawIdempotencyRecords = mysqlTable(
     createdAt: datetime('created_at', { mode: 'string' }).notNull(),
   },
   (table) => [
+    index('created_at').on(table.createdAt),
     index('transaction_id').on(
       table.transactionId,
       table.userId,
       table.operationType,
     ),
-    index('created_at').on(table.createdAt),
     primaryKey({
       columns: [table.id],
       name: 'withdraw_idempotency_records_id',
