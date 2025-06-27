@@ -57,6 +57,7 @@ const envFile = path.resolve(process.cwd(), `.env.${ENV}`);
 if (fs.existsSync(envFile)) {
   dotenv.config({ path: envFile });
   console.log(`✅ Loaded ${envFile}`);
+  console.log(ENV);
 } else {
   dotenv.config(); // fallback to default .env
   console.log(`⚠️  ${envFile} not found. Loaded fallback .env`);
